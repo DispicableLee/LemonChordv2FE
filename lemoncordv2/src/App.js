@@ -1,8 +1,12 @@
 import S3Upload from './Components/S3Upload';
+import Login from './Components/Login';
+import Logout from './Components/Logout'
 function App() {
   return (
     <div>
-        <S3Upload/>
+        {/* <Logout/>
+        <S3Upload/> */}
+        <Login/>
     </div>
   );
 }
