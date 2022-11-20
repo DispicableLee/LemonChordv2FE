@@ -16,6 +16,7 @@ function App() {
         {/* <Logout/> */}
         <S3Upload/>
         {/* <Login/> */}
+        <S3Upload/>
     </div>
   );
 }
