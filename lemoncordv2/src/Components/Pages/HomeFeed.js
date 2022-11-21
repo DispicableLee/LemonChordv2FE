@@ -7,6 +7,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import SongList from "../SongList";
+import Streamer from '../Streamer'
 
 export default function HomeFeed(){
 //=================== setting displayed songs ====================================
@@ -21,13 +22,9 @@ export default function HomeFeed(){
     },[])
     return (
         <Card sx={{ maxWidth: "100%" }}>
-        <CardMedia
-          component="img"
-          alt="green iguana"
-          height="140"
-          image="/static/images/cards/contemplative-reptile.jpg"
-        />
         <CardContent>
+            <Streamer/>
+            <br/>
           <Typography gutterBottom variant="h5" component="div">
             Your Home Feed
           </Typography>

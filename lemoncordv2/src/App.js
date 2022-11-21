@@ -39,7 +39,12 @@ function App() {
 
   return (
     <div>
-      <AppBar position="static">
+      <AppBar position="static" 
+        style={{
+          backgroundColor: 'rgb(27, 162, 177)',
+          color: "rgb(226, 226, 226)"
+        }}
+      >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -110,11 +115,12 @@ function App() {
             >
               LOGO
             </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex",  }  }}>
               {/* ================= setting up ul with links ==================== */}
               <ul
+                sx={{display: "inline"}}
                 style={{
-                  display: "inline-table",
+                  display: "inline",
                   listStyleType: "none"
                 }}
                 >
