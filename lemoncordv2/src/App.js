@@ -1,5 +1,4 @@
 import * as React from "react";
-import S3Upload from "./Components/S3Upload";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,7 +8,6 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
@@ -17,8 +15,10 @@ import { Routes, Router, Route, Link, useNavigate } from "react-router-dom";
 //============ importing component routes ===============================
 import NewUser from "./Components/Pages/NewUser";
 import HomeFeed from "./Components/Pages/HomeFeed";
+import S3Upload from "./Components/Pages/S3Upload";
+import Profile from "./Components/Pages/Profile";
 
-const settings = ["Profile", "LikedTracks", "Dashboard", "Logout"];
+const settings = ["Profile", "LikedTracks"];
 
 function App() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -135,7 +135,7 @@ function App() {
                 </li>
               </ul>
             </Box>
-            {/* ======================== nav menu options =========================================== */}
+{/* ======================== nav menu options =========================================== */}
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -158,11 +158,11 @@ function App() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
+                  <Link to="/Profile">
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">Profile</Typography>
                   </MenuItem>
-                ))}
+                  </Link>
               </Menu>
             </Box>
           </Toolbar>
@@ -173,6 +173,7 @@ function App() {
         <Route path="/" element={<HomeFeed />} />
         <Route path="/new-user" element={<NewUser />} />
         <Route path="new-song" element={<S3Upload />} />
+        <Route path="/Profile" element={<Profile/>}/>
       </Routes>
     </div>
   );
