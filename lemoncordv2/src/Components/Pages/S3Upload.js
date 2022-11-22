@@ -1,5 +1,6 @@
 import React , {useState} from 'react';
-import { uploadFile } from 'react-s3';
+import { uploadFile } from 'react-s3'
+import TextField from "@mui/material/TextField";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 //====================== s3 upload ======================================
@@ -46,16 +47,34 @@ const S3Upload = () => {
             .catch(err => console.error(err))
     }
 //================================= mongoDB api POST call ===============================
-    // function mongoPost(e){
-    //     e.preventDefault()
-    //     fetch("")
-    // }
+    function mongoPost(e){
+        const newObj = {
+            
+        }
+        e.preventDefault()
+        fetch(`${location}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-    return <div>
+        })
+    }
+
+    return (
+    <div>
+        <br/>
         <div>React S3 File Upload</div>
+        <br/>
+        <TextField
+            label="Song Name"
+            variant='outlined'
+            onChange={(e)=>setName(e.target.value)}
+        />
         <input type="file" onChange={handleFileInput}/>
         <button onClick={() => handleUpload(selectedFile)}> Upload to S3</button>
     </div>
+    )
 }
 
 export default S3Upload;

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -21,8 +22,9 @@ import Profile from "./Components/Pages/Profile";
 const settings = ["Profile", "LikedTracks"];
 
 function App() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [user, setUser] = useState({})
   //================= open/close nav menu =============================
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -36,6 +38,10 @@ function App() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+//======================================= set user for upload/ profile functionalities ======================
+  function signIn(data){
+    setUser(data)
+  }
 
   return (
     <div>
@@ -171,9 +177,9 @@ function App() {
       </AppBar>
       <Routes>
         <Route path="/" element={<HomeFeed />} />
-        <Route path="/new-user" element={<NewUser />} />
-        <Route path="new-song" element={<S3Upload />} />
-        <Route path="/Profile" element={<Profile/>}/>
+        <Route path="/new-user" element={<NewUser signIn={signIn}/>} />
+        <Route path="new-song" element={<S3Upload user={user}/>} />
+        <Route path="/Profile" element={<Profile user={user}/>}/>
       </Routes>
     </div>
   );
