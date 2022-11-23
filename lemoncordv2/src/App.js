@@ -12,19 +12,50 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import { Routes, Router, Route, Link, useNavigate } from "react-router-dom";
-//============ importing component routes ===============================
+//============================== importing component routes ===============================
 import NewUser from "./Components/Pages/NewUser";
 import HomeFeed from "./Components/Pages/HomeFeed";
 import S3Upload from "./Components/Pages/S3Upload";
 import Profile from "./Components/Pages/Profile";
 
-const settings = ["Profile", "LikedTracks"];
-
 function App() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [user, setUser] = useState({})
+  //======================== current user functionalities ================================
+  const [user, setUser] = useState({});
+  const [signId, setSignId] = useState("");
+  console.log(user);
+  function signedIn(data) {
+    setUser(data);
+    console.log(user);
+  }
+  function signOut() {
+    setUser({});
+  }
+  function signIn(e) {
+    e.preventDefault()
+    fetch(`http://localhost:4002/api/v2/endPoints/search/users/${signId}`)
+    .then((data)=>setUser(data))
+  }
+  //===================== sign in dialog functionalities ======================
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   //================= open/close nav menu =============================
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -38,17 +69,14 @@ function App() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-//======================================= set user for upload/ profile functionalities ======================
-  function signIn(data){
-    setUser(data)
-  }
 
   return (
     <div>
-      <AppBar position="static" 
+      <AppBar
+        position="static"
         style={{
-          backgroundColor: 'rgb(27, 162, 177)',
-          color: "rgb(226, 226, 226)"
+          backgroundColor: "rgb(27, 162, 177)",
+          color: "rgb(226, 226, 226)",
         }}
       >
         <Container maxWidth="xl">
@@ -121,15 +149,15 @@ function App() {
             >
               LOGO
             </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex",  }  }}>
-              {/* ================= setting up ul with links ==================== */}
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+{/* ================================= setting up ul with links =============================== */}
               <ul
-                sx={{display: "inline"}}
+                sx={{ display: "inline" }}
                 style={{
                   display: "inline",
-                  listStyleType: "none"
+                  listStyleType: "none",
                 }}
-                >
+              >
                 <li>
                   <Link to="/">Home Feed</Link>
                 </li>
@@ -141,7 +169,7 @@ function App() {
                 </li>
               </ul>
             </Box>
-{/* ======================== nav menu options =========================================== */}
+{/* ==================================== nav menu =========================================== */}
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -164,22 +192,59 @@ function App() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                  <Link to="/Profile">
+{/* ================================= nav menu options ============================================== */}
+                <Link to="/Profile">
                   <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">Profile</Typography>
                   </MenuItem>
-                  </Link>
+                </Link>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center" onClick={signIn}>
+                    Sign In
+                  </Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center" onClick={signOut}>
+                    Sign Out
+                  </Typography>
+                </MenuItem>
+{/* =============================== sign in dialog ============================================== */}
+                <MenuItem>
+                  <Button variant="outlined" onClick={handleClickOpen}>
+                    Open form dialog
+                  </Button>
+                  <Dialog open={open} onClose={handleClose}>
+                    <DialogTitle>Subscribe</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText>
+                        To subscribe to this website, please enter your email
+                        address here. We will send updates occasionally.
+                      </DialogContentText>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        label="User ID"
+                        fullWidth
+                        variant="standard"
+                        onChange={(e)=>setSignId(e.target.value)}
+                      />
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={signIn}>Sign In</Button>
+                    </DialogActions>
+                  </Dialog>
+                </MenuItem>
               </Menu>
             </Box>
           </Toolbar>
         </Container>
-        {/* ====================== setting up routes =========================== */}
+{/* ============================= setting up routes ======================================= */}
       </AppBar>
       <Routes>
         <Route path="/" element={<HomeFeed />} />
-        <Route path="/new-user" element={<NewUser signIn={signIn}/>} />
-        <Route path="new-song" element={<S3Upload user={user}/>} />
-        <Route path="/Profile" element={<Profile user={user}/>}/>
+        <Route path="/new-user" element={<NewUser signedIn={signedIn} />} />
+        <Route path="new-song" element={<S3Upload user={user} />} />
+        <Route path="/Profile" element={<Profile user={user} />} />
       </Routes>
     </div>
   );

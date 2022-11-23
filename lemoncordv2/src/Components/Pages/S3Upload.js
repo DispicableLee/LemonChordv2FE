@@ -49,14 +49,19 @@ const S3Upload = () => {
 //================================= mongoDB api POST call ===============================
     function mongoPost(e){
         const newObj = {
-            
+            name: name,
+            bucket: bucket,
+            key: key,
+            location: location,
+            userId: userId
         }
         e.preventDefault()
-        fetch(`${location}`, {
+        fetch(`http://localhost:4002/api/v2/endPoints/new/audio/${userId}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
+            body: JSON.stringify(newObj)
 
         })
     }
