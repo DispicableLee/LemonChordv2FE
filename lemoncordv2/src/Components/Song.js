@@ -29,12 +29,6 @@ export default function Song({songName, location, likes, setSongSrc}) {
     fontSize: "30px",
     border: isHover ? " 2px solid rgb(76, 146, 148) " : "rgb(0, 191, 255)",
   };
-//=========================== playSong function =============================
-function playSong(e){
-  e.preventDefault()
-  fetch(`${location}`)
-  .then(setSongSrc)
-}
 
   return (
     <div>
@@ -59,9 +53,8 @@ function playSong(e){
             adjective
           </Typography>
         </CardContent>
-        <IconButton aria-label="play/pause" onClick={playSong}>
-          <PlayArrowIcon 
-            sx={{ height: 38, width: 38 }} />
+        <IconButton aria-label="play/pause">
+          <PlayArrowIcon sx={{ height: 38, width: 38 }} />
         </IconButton>
       </Card>
       <Divider />

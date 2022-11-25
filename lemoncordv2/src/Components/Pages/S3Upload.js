@@ -1,6 +1,5 @@
 import React , {useState} from 'react';
-import { uploadFile } from 'react-s3'
-import TextField from "@mui/material/TextField";
+import { uploadFile } from 'react-s3';
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 //====================== s3 upload ======================================
@@ -62,20 +61,14 @@ const S3Upload = () => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(newObj)
-
         })
+
     }
 
-    return (
+    return 
+    (
     <div>
-        <br/>
         <div>React S3 File Upload</div>
-        <br/>
-        <TextField
-            label="Song Name"
-            variant='outlined'
-            onChange={(e)=>setName(e.target.value)}
-        />
         <input type="file" onChange={handleFileInput}/>
         <button onClick={() => handleUpload(selectedFile)}> Upload to S3</button>
     </div>

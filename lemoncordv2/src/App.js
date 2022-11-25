@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -27,35 +26,8 @@ import S3Upload from "./Components/Pages/S3Upload";
 import Profile from "./Components/Pages/Profile";
 
 function App() {
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
-  //======================== current user functionalities ================================
-  const [user, setUser] = useState({});
-  const [signId, setSignId] = useState("");
-  console.log(user);
-  function signedIn(data) {
-    setUser(data);
-    console.log(user);
-  }
-  function signOut() {
-    setUser({});
-  }
-  function signIn(e) {
-    e.preventDefault()
-    fetch(`http://localhost:4002/api/v2/endPoints/search/users/${signId}`)
-    .then((data)=>setUser(data))
-  }
-  //===================== sign in dialog functionalities ======================
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
   //================= open/close nav menu =============================
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -242,9 +214,9 @@ function App() {
       </AppBar>
       <Routes>
         <Route path="/" element={<HomeFeed />} />
-        <Route path="/new-user" element={<NewUser signedIn={signedIn} />} />
-        <Route path="new-song" element={<S3Upload user={user} />} />
-        <Route path="/Profile" element={<Profile user={user} />} />
+        <Route path="/new-user" element={<NewUser />} />
+        <Route path="new-song" element={<S3Upload />} />
+        <Route path="/Profile" element={<Profile/>}/>
       </Routes>
     </div>
   );
