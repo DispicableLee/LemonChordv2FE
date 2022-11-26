@@ -11,7 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { useState } from "react";
 
-export default function Song({songName, location, likes, setSongSrc}) {
+export default function Song(props) {
   //=================== hover state setting =========================
   const [isHover, setIsHover] = useState(false);
 
@@ -29,6 +29,11 @@ export default function Song({songName, location, likes, setSongSrc}) {
     fontSize: "30px",
     border: isHover ? " 2px solid rgb(76, 146, 148) " : "rgb(0, 191, 255)",
   };
+//=========================== playSong function =============================
+function playSong(e){
+  e.preventDefault()
+  
+}
 
   return (
     <div>
@@ -45,9 +50,9 @@ export default function Song({songName, location, likes, setSongSrc}) {
       >
         <CardContent>
           <Typography color="white" gutterBottom>
-            {songName}
+            {props.songName}
             <br />
-            {likes.length} Likes
+            {props.likes.length} Likes
           </Typography>
           <Typography sx={{ mb: 1.5 }} color="white">
             adjective

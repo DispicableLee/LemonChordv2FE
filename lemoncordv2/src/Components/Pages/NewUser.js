@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import { useState } from "react";
 
-export default function NewUser(signedIn) {
+export default function BasicTextFields() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -25,7 +25,7 @@ export default function NewUser(signedIn) {
       body: JSON.stringify(newObj)
     })
     .then((res)=>res.json())
-    .then((json)=>signedIn(json))
+    .then(console.log)
   }
   return (
     <Box
