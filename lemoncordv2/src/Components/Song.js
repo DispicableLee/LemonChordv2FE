@@ -1,12 +1,8 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import { border, style } from "@mui/system";
 import IconButton from "@mui/material/IconButton";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { useState } from "react";
@@ -58,7 +54,7 @@ function playSong(e){
             adjective
           </Typography>
         </CardContent>
-        <IconButton aria-label="play/pause">
+        <IconButton aria-label="play/pause" onClick={playSong}>
           <PlayArrowIcon sx={{ height: 38, width: 38 }} />
         </IconButton>
       </Card>

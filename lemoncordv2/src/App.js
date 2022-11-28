@@ -11,14 +11,12 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { Routes, Router, Route, Link, useNavigate } from "react-router-dom";
+import { Routes, Route, Link} from "react-router-dom";
 //============ importing component routes ===============================
 import NewUser from "./Components/Pages/NewUser";
 import HomeFeed from "./Components/Pages/HomeFeed";
 import S3Upload from "./Components/Pages/S3Upload";
 import Profile from "./Components/Pages/Profile";
-
-const settings = ["Profile", "LikedTracks"];
 
 function App() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -37,9 +35,6 @@ function App() {
     setAnchorElUser(null);
   };
 //======================================= set user for upload/ profile functionalities ======================
-  function signIn(data){
-    setUser(data)
-  }
 
   return (
     <div>
@@ -175,9 +170,9 @@ function App() {
       </AppBar>
       <Routes>
         <Route path="/" element={<HomeFeed />} />
-        <Route path="/new-user" element={<NewUser signIn={signIn}/>} />
-        <Route path="new-song" element={<S3Upload user={user}/>} />
-        <Route path="/Profile" element={<Profile user={user}/>}/>
+        <Route path="/new-user" element={<NewUser />}/>
+        <Route path="new-song" element={<S3Upload />}/>
+        <Route path="/Profile" element={<Profile />}/>
       </Routes>
     </div>
   );
