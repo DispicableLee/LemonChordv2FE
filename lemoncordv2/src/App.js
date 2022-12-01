@@ -15,7 +15,7 @@ import { Routes, Route, Link} from "react-router-dom";
 //============ importing component routes ===============================
 import NewUser from "./Components/Pages/NewUser";
 import HomeFeed from "./Components/Pages/HomeFeed";
-import S3Upload from "./Components/Pages/S3Upload";
+// import S3Upload from "./Components/Pages/S3Upload";
 import Profile from "./Components/Pages/Profile";
 
 function App() {
@@ -126,9 +126,9 @@ function App() {
                 <li>
                   <Link to="/">Home Feed</Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/new-song">Upload a song</Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to="/new-user">Create an account!</Link>
                 </li>
@@ -171,7 +171,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomeFeed />} />
         <Route path="/new-user" element={<NewUser />}/>
-        <Route path="new-song" element={<S3Upload />}/>
+        {/* <Route path="new-song" element={<S3Upload />}/> */}
         <Route path="/Profile" element={<Profile />}/>
       </Routes>
     </div>

@@ -6,12 +6,12 @@ export default function Streamer() {
 
   return (
     <div>
-      <ThemeProvider>
+      {/* <ThemeProvider> */}
         <AudioPlayer 
             src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
             download={true}
             />
-      </ThemeProvider>
+      {/* </ThemeProvider> */}
     
     </div>
   );
