@@ -19,13 +19,9 @@ export default function HomeFeed(){
 
     },[])
     return (
-        <Card style={{
-           maxWidth: "100%",
-           borderTop: "1px solid #253237",
-           borderRadius: "30px 30px 0px 0px"
-           }}>
+        <Card sx={{ maxWidth: "100%" }}>
         <CardContent>
-
+            <Streamer/>
             <br/>
           <Typography gutterBottom variant="h5" component="div">
             Your Home Feed
@@ -34,10 +30,7 @@ export default function HomeFeed(){
             All songs from all our delicious Users!
           </Typography>
         </CardContent>
-           
-
         <SongList displayedSongs={displayedSongs}/>
-        <Streamer/>
       </Card>
     )
 }
