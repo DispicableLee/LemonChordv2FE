@@ -23,6 +23,7 @@ export default function Song(props) {
     color: "rgb(226, 226, 226)",
     display: "flex",
     fontSize: "30px",
+    width: 700,
     border: isHover ? " 2px solid rgb(76, 146, 148) " : "rgb(0, 191, 255)",
   };
 //=========================== playSong function =============================

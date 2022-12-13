@@ -10,6 +10,7 @@ import Streamer from '../Streamer'
 export default function HomeFeed(){
 //=================== setting displayed songs ====================================
     const [displayedSongs, setDisplayedSongs] = useState([])
+    const [displayedPlaylists, setDisplayedPlaylists] = useState([])
 //===================== fetching songs to display ===========================
     useEffect(()=>{
         fetch("http://localhost:4002/api/v2/endPoints/search/all/songs")
@@ -17,11 +18,17 @@ export default function HomeFeed(){
         .then(setDisplayedSongs)
         console.log(displayedSongs)
 
+        fetch("http://localhost:4002/api/v2/endPoints/search/all/playlists")
+        .then((r)=>r.json())
+        .then(setDisplayedPlaylists)
+        console.log(displayedPlaylists)
     },[])
     return (
-        <Card sx={{ maxWidth: "100%" }}>
+        <Card sx={{ 
+          maxWidth: "100%",
+          
+          }}>
         <CardContent>
-            <Streamer/>
             <br/>
           <Typography gutterBottom variant="h5" component="div">
             Your Home Feed
@@ -31,6 +38,7 @@ export default function HomeFeed(){
           </Typography>
         </CardContent>
         <SongList displayedSongs={displayedSongs}/>
+            <Streamer/>
       </Card>
     )
 }
