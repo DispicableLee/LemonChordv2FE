@@ -57,7 +57,7 @@ var UserData = (function () {
 
   var setImage = (image)=>{
     iMage = image
-    localStorage.setItem(iMage)
+    localStorage.setItem("image",iMage)
   }
 
   var signOut=()=>{

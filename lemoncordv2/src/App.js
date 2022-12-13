@@ -12,9 +12,19 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Routes, Route, Link} from "react-router-dom";
+//===================== drawer dependancies =============================
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 //============ importing component routes ===============================
 import NewUser from "./Components/Pages/NewUser";
 import HomeFeed from "./Components/Pages/HomeFeed";
+import lemonChord from './Components/styling/1036.png'
 // import S3Upload from "./Components/Pages/S3Upload";
 import Profile from "./Components/Pages/Profile";
 
@@ -46,7 +56,14 @@ function App() {
       >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+            <img
+              style={{
+                maxHeight: 40,
+                cursor: 'pointer'
+              }}
+              src={lemonChord}
+              
+            />
             <Typography
               variant="h6"
               noWrap
@@ -62,7 +79,7 @@ function App() {
                 textDecoration: "none",
               }}
             >
-              LOGO
+              LemonChord
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
