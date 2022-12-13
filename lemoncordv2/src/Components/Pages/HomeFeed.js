@@ -12,15 +12,21 @@ import { Box } from "@mui/system";
 export default function HomeFeed(){
 //=================== setting displayed songs ====================================
     const [displayedSongs, setDisplayedSongs] = useState([])
+    const [src, setSrc] = useState("")
 //===================== fetching songs to display ===========================
     useEffect(()=>{
         fetch("http://localhost:4002/api/v2/endPoints/search/all/songs")
         .then((res)=> res.json())
-        .then(setDisplayedSongs)
-        console.log(displayedSongs)
-
+        .then((data) => setDisplayedSongs(data))
     },[])
+    console.log(displayedSongs)
+
+    function getSrc(location){
+      console.log(location)
+      setSrc(location)
+    }
     return (
+      <div>
         <Card sx={{ 
           maxWidth: "100%",
           padding: 6
@@ -41,8 +47,9 @@ export default function HomeFeed(){
             All songs from all our delicious Users!
           </Typography>
         </CardContent>
-        <SongList displayedSongs={displayedSongs}/>
-            <Streamer/>
+        <SongList displayedSongs={displayedSongs} getSrc={getSrc}/>
+            <Streamer src={src}/>
       </Card>
+        </div>
     )
 }

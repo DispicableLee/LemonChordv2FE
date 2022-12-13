@@ -1,8 +1,8 @@
 import React from "react";
-import {ThemeProvider } from "@mui/material";
+import { useState } from "react";
 import AudioPlayer from "material-ui-audio-player";
 
-export default function Streamer() {
+export default function Streamer(src) {
 
   return (
     <div style={{
@@ -10,8 +10,9 @@ export default function Streamer() {
     }}>
       {/* <ThemeProvider> */}
         <AudioPlayer 
-            src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+            src={src.src}
             download={true}
+            autoplay= {true}
             />
       {/* </ThemeProvider> */}
     

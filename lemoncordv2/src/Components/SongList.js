@@ -2,10 +2,9 @@ import React from "react";
 import { useState } from "react";
 import Song from './Song'
 
-export default function SongList(displayedSongs){
-    const toBeRendered = displayedSongs.displayedSongs
-    console.log(toBeRendered)
-    const renderedSongs = toBeRendered.map((s)=>{
+export default function SongList({displayedSongs, getSrc}){
+
+    const renderedSongs = displayedSongs.map((s)=>{
         return (
             <Song
              key={s.id}
@@ -13,6 +12,7 @@ export default function SongList(displayedSongs){
              songName={s.name}
              location={s.location}
              likes={s.likes}
+             getSrc={getSrc}
             />
         )
     })
