@@ -1,11 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import UserData from "../UserData";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
+import { Button } from "@mui/material";
 
 export default function Profile(){
+    const navigate = useNavigate()
     console.log(localStorage.email)
     console.log(localStorage.username)
     console.log(localStorage.password)
@@ -13,6 +16,10 @@ export default function Profile(){
     console.log(localStorage.name)
     console.log(localStorage.image)
 
+    function logOut(){
+        UserData.signOut()
+        navigate("/")
+    }
     return (
         <div>
         <h1>
@@ -39,6 +46,16 @@ export default function Profile(){
 
       </CardContent>
     </Card>
+    <aside style={{
+        float: 'right'
+    }}>
+        <Button
+            variant="contained"
+            onClick={logOut}
+        >
+            Log Out
+        </Button>
+    </aside>
         </div>
     )
 }

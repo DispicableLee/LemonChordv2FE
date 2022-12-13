@@ -15,6 +15,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { List, ListItem } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -27,18 +28,32 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function Playlist() {
+export default function Playlist({image, likes, name, songs}) {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const renderedSongs = songs.map((song)=>{
+    return (
+            <ListItem sx={{
+                borderBottom: "1px solid #253237",
+                borderRadius: "0px 0px 0px 30px",
+                marginTop: "30px",
+                padding: "30px 20px 10px",
+                width: "75%"
+            }}>
+                {song}
+            </ListItem>
+    )
+  })
+
   return (
     <Card sx={{ 
         maxWidth: "70%", 
-        
         }}>
+          <Link to="/">HomeFeed</Link>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -50,21 +65,16 @@ export default function Playlist() {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Song Title"
+        title={name}
         subheader="posted by [user]"
       />
       <CardMedia
         component="img"
-        height="50"
-        image="/static/images/cards/paella.jpg"
+        height="300"
+        image={image}
         alt="Paella dish"
       />
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the mussels,
-          if you like.
-        </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
@@ -82,24 +92,7 @@ export default function Playlist() {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <List>
-            <ListItem sx={{
-                borderBottom: "1px solid #253237",
-                borderRadius: "0px 0px 0px 30px",
-                marginTop: "30px",
-                padding: "30px 20px 10px",
-                width: "75%"
-            }}>
-                lol
-            </ListItem>
-            <ListItem sx={{
-                borderBottom: "1px solid #253237",
-                borderRadius: "0px 0px 0px 30px",
-                marginTop: "30px",
-                padding: "30px 20px 10px",
-                width: "75%"
-            }}>
-                lol
-            </ListItem>
+            {renderedSongs}
           </List>
         </CardContent>
       </Collapse>

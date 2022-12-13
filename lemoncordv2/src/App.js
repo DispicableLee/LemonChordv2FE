@@ -11,7 +11,8 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { Routes, Route, Link} from "react-router-dom";
+import { Button } from "@mui/material";
+import { Routes, Route, Link, useNavigate} from "react-router-dom";
 //===================== drawer dependancies =============================
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
@@ -22,13 +23,16 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 //============ importing component routes ===============================
-import NewUser from "./Components/Pages/NewUser";
-import HomeFeed from "./Components/Pages/HomeFeed";
 import lemonChord from './Components/styling/1036.png'
+import PlaylistList from "./Components/PlaylistList";
+import HomeFeed from "./Components/Pages/HomeFeed";
+import NewUser from "./Components/Pages/NewUser";
+import SignIn from './Components/Pages/SignIn'
 // import S3Upload from "./Components/Pages/S3Upload";
 import Profile from "./Components/Pages/Profile";
 
 function App() {
+  const navigate = useNavigate()
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   //================= open/close nav menu =============================
@@ -153,9 +157,16 @@ function App() {
             </Box>
 {/* ======================== nav menu options =========================================== */}
             <Box sx={{ flexGrow: 0 }}>
+              <Button
+                variant="contained"
+                onClick={()=>navigate("/signin")}
+              >
+                SignIn
+              </Button>
+              
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="Remy Sharp" src="https://i.pinimg.com/236x/1c/53/c5/1c53c5b3f3c6e788bfd32f2b4d54ed59.jpg" />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -189,6 +200,8 @@ function App() {
         <Route path="/" element={<HomeFeed />} />
         <Route path="/new-user" element={<NewUser />}/>
         {/* <Route path="new-song" element={<S3Upload />}/> */}
+        <Route path="/playlistsList" element={<PlaylistList/>}/>
+        <Route path="/signin" element={<SignIn/>}/>
         <Route path="/Profile" element={<Profile />}/>
       </Routes>
     </div>
