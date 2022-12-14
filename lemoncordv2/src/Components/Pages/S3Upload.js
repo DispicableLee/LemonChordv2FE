@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { uploadFile } from "react-s3";
 import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 window.Buffer = window.Buffer || require("buffer").Buffer;
@@ -8,9 +9,13 @@ window.Buffer = window.Buffer || require("buffer").Buffer;
 //====================== s3 upload ======================================
 const S3_BUCKET = "lemoncord";
 const REGION = "us-east-1";
-// const ACCESS_KEY = ACCESS KEYS WITHHELD FOR SECURITY PURPOSES. RE-INSERT THE KEYS WHEN IT IS TIME FOR APPLICATION TESTING AND DEVELOPMENT
+const ACCESS_KEY = "AKIA4KLDG37L66RU4WVA"
+const SECRET_ACCESS_KEY = "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"
+// const ACCESS_KEY = ACCESS KEYS WITHHELD FOR SECURITY PURPOSES. 
+// RE-INSERT THE KEYS WHEN IT IS TIME FOR APPLICATION TESTING AND DEVELOPMENT
 // const SECRET_ACCESS_KEY 
 const DIRECTORY = "songs";
+const callId = localStorage.id
 
 const config = {
   bucketName: S3_BUCKET,
@@ -21,6 +26,7 @@ const config = {
 };
 
 const S3Upload = () => {
+  const navigate = useNavigate()
   //========================= s3 file state ====================================
   const [selectedFile, setSelectedFile] = useState(null);
   //========================= mongoDB upload states ===========================
@@ -28,6 +34,7 @@ const S3Upload = () => {
   const [bucket, setBucket] = useState("");
   const [key, setKey] = useState("");
   const [location, setLocation] = useState("");
+  const [image, setImage] = useState("")
 
   //============================ s3 upload handlers ===================================
   const handleFileInput = (e) => {
@@ -36,25 +43,30 @@ const S3Upload = () => {
     setSelectedFile(e.target.files[0]);
   };
   const handleUpload = async (file) => {
+    uploadFile(file, config)
+    .then((data) => {
+      console.log(data);
+      setBucket(data.bucket);
+      console.log(bucket);
+      setKey(data.key);
+      console.log(key);
+      setLocation(data.location);
+      console.log(location);
+    })
+    .catch((err) => console.error(err));
     const newObj = {
         name: name,
         bucket: bucket,
         key: key,
-        location: location
+        location: location,
+        likes: [],
+        userId: callId,
+        image: image,
+        comments: []
     }
-    uploadFile(file, config)
-      .then((data) => {
-        console.log(data);
-        setBucket(data.bucket);
-        console.log(bucket);
-        setKey(data.key);
-        console.log(key);
-        setLocation(data.location);
-        console.log(location);
-      })
-      .catch((err) => console.error(err));
+    console.log(newObj)
     
-    fetch("http://localhost:4002/api/v2/endPoints/new/audio/637cde3874714cf3d1357643", {
+    fetch(`http://localhost:4002/api/v2/endPoints/new/audio/${callId}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -62,10 +74,12 @@ const S3Upload = () => {
         body: JSON.stringify(newObj)
     })
     .then((data)=>console.log(data))
+    navigate("/")
+
   };
 
   
-  //================================= mongoDB api POST call ===============================
+//========================================= mongoDB api POST call =============================================
 
   return (
     <div style={{
@@ -74,12 +88,24 @@ const S3Upload = () => {
     }}>
       <div>React S3 File Upload</div>
       <br />
-      <TextField label="Song name" />
-      <Button variant="contained" component="label">
+      <TextField 
+      label="Song name"
+      onChange={(e)=>setName(e.target.value)}
+      />
+      <TextField 
+        label="image"
+        onChange={(e)=>setImage(e.target.value)}
+      />
+      <Button 
+        variant="contained" 
+        component="label">
         Select File to Upload
         <input type="file" hidden onChange={handleFileInput} />
       </Button>
-      <Button variant="contained" component="label" onClick={() => handleUpload(selectedFile)}>
+      <Button 
+        variant="contained" 
+        component="label" 
+        onClick={() => handleUpload(selectedFile)}>
         Upload Song
       </Button>
     </div>

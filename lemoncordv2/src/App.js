@@ -13,6 +13,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Button } from "@mui/material";
 import { Routes, Route, Link, useNavigate} from "react-router-dom";
+import { useState, useEffect } from "react";
 //===================== drawer dependancies =============================
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
@@ -27,12 +28,14 @@ import lemonChord from './Components/styling/1036.png'
 import PlaylistList from "./Components/PlaylistList";
 import HomeFeed from "./Components/Pages/HomeFeed";
 import NewUser from "./Components/Pages/NewUser";
-import SignIn from './Components/Pages/SignIn'
-// import S3Upload from "./Components/Pages/S3Upload";
+import SignIn from './Components/SignIn'
+import S3Upload from "./Components/Pages/S3Upload";
 import Profile from "./Components/Pages/Profile";
 
 function App() {
   const navigate = useNavigate()
+  const [displayedSongs, setDisplayedSongs] = useState([])
+  const [playlists, setPlaylists] = useState([])
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   //================= open/close nav menu =============================
@@ -48,7 +51,22 @@ function App() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-//======================================= set user for upload/ profile functionalities ======================
+//=================================== api calls for songs and playlists ====================================
+    useEffect(()=>{
+        fetch("http://localhost:4002/api/v2/endPoints/search/all/songs")
+        .then((res)=> res.json())
+        .then((json) => {
+          console.log(json)
+          setDisplayedSongs(json)}
+          )
+        
+        fetch("http://localhost:4002/api/v2/endPoints/search/all/playlists")
+        .then((r)=>r.json())
+        .then((json)=>{
+            setPlaylists(json)
+        })
+
+    },[])
 
   return (
     <div>
@@ -85,7 +103,7 @@ function App() {
             >
               LemonChord
             </Typography>
-
+              
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
@@ -94,7 +112,7 @@ function App() {
                 aria-haspopup="true"
                 onClick={handleOpenNavMenu}
                 color="inherit"
-              >
+                >
                 <MenuIcon />
               </IconButton>
               <Menu
@@ -147,9 +165,9 @@ function App() {
                 <li>
                   <Link to="/">Home Feed</Link>
                 </li>
-                {/* <li>
+                <li>
                   <Link to="/new-song">Upload a song</Link>
-                </li> */}
+                </li>
                 <li>
                   <Link to="/new-user">Create an account!</Link>
                 </li>
@@ -157,12 +175,7 @@ function App() {
             </Box>
 {/* ======================== nav menu options =========================================== */}
             <Box sx={{ flexGrow: 0 }}>
-              <Button
-                variant="contained"
-                onClick={()=>navigate("/signin")}
-              >
-                SignIn
-              </Button>
+                <SignIn/>
               
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -197,10 +210,10 @@ function App() {
         {/* ====================== setting up routes =========================== */}
       </AppBar>
       <Routes>
-        <Route path="/" element={<HomeFeed />} />
+        <Route path="/" element={<HomeFeed setDisplayedSongs={setDisplayedSongs} displayedSongs={displayedSongs}/>}/>
         <Route path="/new-user" element={<NewUser />}/>
-        {/* <Route path="new-song" element={<S3Upload />}/> */}
-        <Route path="/playlistsList" element={<PlaylistList/>}/>
+        <Route path="new-song" element={<S3Upload />}/>
+        <Route path="/playlistsList" element={<PlaylistList playlists={playlists}/>}/>
         <Route path="/signin" element={<SignIn/>}/>
         <Route path="/Profile" element={<Profile />}/>
       </Routes>

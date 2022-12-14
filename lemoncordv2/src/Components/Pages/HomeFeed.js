@@ -9,26 +9,25 @@ import Streamer from '../Streamer'
 import PlaylistList from '../PlaylistList'
 import { Box } from "@mui/system";
 
-export default function HomeFeed(){
+export default function HomeFeed({setDisplayedSongs,displayedSongs}){
 //=================== setting displayed songs ====================================
-    const [displayedSongs, setDisplayedSongs] = useState([])
     const [src, setSrc] = useState("")
 //===================== fetching songs to display ===========================
-    useEffect(()=>{
-        fetch("http://localhost:4002/api/v2/endPoints/search/all/songs")
-        .then((res)=> res.json())
-        .then((data) => setDisplayedSongs(data))
-    },[])
-    console.log(displayedSongs)
 
     function getSrc(location){
       console.log(location)
       setSrc(location)
     }
+//========================== handleDeleteSong ==========================================
+function handleDeleteSong(id){
+  const sUpdated = displayedSongs.filter((song)=>song.id!=id)
+  setDisplayedSongs(sUpdated)
+}
     return (
       <div>
         <Card sx={{ 
-          maxWidth: "100%",
+          maxWidth: "75%",
+          margin: 'auto',
           padding: 6
           }}>
             <Box
@@ -47,7 +46,10 @@ export default function HomeFeed(){
             All songs from all our delicious Users!
           </Typography>
         </CardContent>
-        <SongList displayedSongs={displayedSongs} getSrc={getSrc}/>
+        <SongList displayedSongs={displayedSongs} getSrc={getSrc} handleDeleteSong={handleDeleteSong}/>
+        <aside>
+          <h1>hi</h1>
+        </aside>
             <Streamer src={src}/>
       </Card>
         </div>
