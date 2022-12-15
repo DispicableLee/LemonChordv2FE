@@ -7,7 +7,7 @@ export default function SongList({displayedSongs, getSrc, handleDeleteSong}){
     const renderedSongs = displayedSongs.map((s)=>{
         return (
             <Song
-             key={s.id}
+             key={s._id}
              id={s._id}
              songName={s.name}
              location={s.location}

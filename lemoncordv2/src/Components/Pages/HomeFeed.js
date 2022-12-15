@@ -28,7 +28,8 @@ function handleDeleteSong(id){
         <Card sx={{ 
           maxWidth: "75%",
           margin: 'auto',
-          padding: 6
+          padding: 6,
+          backgroundColor: "#E2E2E2"
           }}>
             <Box
               style={{

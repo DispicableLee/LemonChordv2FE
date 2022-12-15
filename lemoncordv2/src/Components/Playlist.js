@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -30,49 +30,45 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function Playlist({ image, likes, name, songs }) {
+export default function Playlist({ key,id , image, likes, name, songs, getSrc, handleDeleteSong }) {
   const [expanded, setExpanded] = useState(false);
+  const [playlistSongs, setPlaylistSongs] = useState([]);
+  //================================ fetching each song in playlist =====================================
+  useEffect(()=>{
+      fetch(`http://localhost:4002/api/v2/endPoints/search/all/songs/playlist/${id}`)
+      .then((r)=>r.json())
+      .then(setPlaylistSongs)
+  }, []) 
+  console.log(playlistSongs)
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  //================================ fetching each song in playlist =====================================
-  const playlistSongs = [];
-
-  for (let i = 0; i < songs.length; i++) {
-    fetch(`http://localhost:4002/api/v2/endPoints/search/audio/${songs[i]}`)
-      .then((r) => r.json())
-      .then((json) => playlistSongs.push(json));
-  }
-  console.log(playlistSongs);
 
   //=========================== mapping out each fecthed song to the PlaylistSong component =============
 
-  const renderedSongs = songs.map((song) => {
+  const renderedPlaylistSongs = playlistSongs.map((song)=>{
     return (
-      <PlaylistSong
-        sx={{
-          borderBottom: "1px solid #1BA2B1",
-          borderRadius: "0px 0px 0px 30px",
-          marginTop: "30px",
-          padding: "30px 20px 10px",
-          width: "75%",
-        }}
-        key={song.id}
+      <PlaylistSong 
+        key={song._id}
         id={song._id}
-        songName={song.name}
+        name={song.name}
+        image={song.image}
         location={song.location}
+        comments={song.comments}
         likes={song.likes}
-        // getSrc={getSrc}
-        // handleDeleteSong={handleDeleteSong}
-      />
-
-    );
-  });
-
+        imageURL={song.image}
+        getSrc={getSrc}
+        handleDeleteSong={handleDeleteSong}
+      />    
+    )
+  })
   return (
     <Card
       sx={{
         maxWidth: "70%",
+        backgroundColor:"#E2E2E2",
+        margin: 'auto',
+        padding: 2
       }}
     >
       <Link to="/">HomeFeed</Link>
@@ -107,7 +103,7 @@ export default function Playlist({ image, likes, name, songs }) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          {renderedSongs}
+          {renderedPlaylistSongs}
         </CardContent>
       </Collapse>
     </Card>
