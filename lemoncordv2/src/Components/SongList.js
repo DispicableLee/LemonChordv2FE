@@ -20,7 +20,9 @@ export default function SongList({displayedSongs, getSrc, handleDeleteSong}){
     return (
         <div style={{
             padding: 10,
-            float: 'left'
+            maxHeight: 500,
+            float: 'left',
+            overflow: 'auto'
         }}>
         {renderedSongs}
         </div>

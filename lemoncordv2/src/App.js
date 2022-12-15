@@ -29,7 +29,7 @@ import PlaylistList from "./Components/PlaylistList";
 import HomeFeed from "./Components/Pages/HomeFeed";
 import NewUser from "./Components/Pages/NewUser";
 import SignIn from './Components/SignIn'
-import S3Upload from "./Components/Pages/S3Upload";
+// import S3Upload from "./Components/Pages/S3Upload";
 import Profile from "./Components/Pages/Profile";
 
 function App() {
@@ -56,7 +56,6 @@ function App() {
         fetch("http://localhost:4002/api/v2/endPoints/search/all/songs")
         .then((res)=> res.json())
         .then((json) => {
-          console.log(json)
           setDisplayedSongs(json)}
           )
         
@@ -165,9 +164,9 @@ function App() {
                 <li>
                   <Link to="/">Home Feed</Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/new-song">Upload a song</Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to="/new-user">Create an account!</Link>
                 </li>
@@ -212,7 +211,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomeFeed setDisplayedSongs={setDisplayedSongs} displayedSongs={displayedSongs}/>}/>
         <Route path="/new-user" element={<NewUser />}/>
-        <Route path="new-song" element={<S3Upload />}/>
+        {/* <Route path="new-song" element={<S3Upload />}/> */}
         <Route path="/playlistsList" element={<PlaylistList playlists={playlists}/>}/>
         <Route path="/signin" element={<SignIn/>}/>
         <Route path="/Profile" element={<Profile />}/>

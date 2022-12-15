@@ -9,8 +9,6 @@ window.Buffer = window.Buffer || require("buffer").Buffer;
 //====================== s3 upload ======================================
 const S3_BUCKET = "lemoncord";
 const REGION = "us-east-1";
-const ACCESS_KEY = "AKIA4KLDG37L66RU4WVA"
-const SECRET_ACCESS_KEY = "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"
 // const ACCESS_KEY = ACCESS KEYS WITHHELD FOR SECURITY PURPOSES. 
 // RE-INSERT THE KEYS WHEN IT IS TIME FOR APPLICATION TESTING AND DEVELOPMENT
 // const SECRET_ACCESS_KEY 
