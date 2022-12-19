@@ -38,7 +38,7 @@ export default function FormDialog() {
         UserData.setEmail(json.email)
         UserData.setImage(json.image)            
     })
-    navigate("/Profile")
+    // navigate("/Profile")
   }
 
   return (

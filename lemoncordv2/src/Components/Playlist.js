@@ -17,7 +17,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { List, ListItem } from "@mui/material";
 import { Link } from "react-router-dom";
-import PlaylistSong from './PlaylistSong'
+import PlaylistSong from "./PlaylistSong";
 //====================================== handling playlist expanded list ==============================
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -30,25 +30,35 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function Playlist({ key,id , image, likes, name, songs, getSrc, handleDeleteSong }) {
+export default function Playlist({
+  key,
+  id,
+  image,
+  likes,
+  name,
+  songs,
+  getSrc,
+  handleDeleteSong,
+}) {
   const [expanded, setExpanded] = useState(false);
   const [playlistSongs, setPlaylistSongs] = useState([]);
   //================================ fetching each song in playlist =====================================
-  useEffect(()=>{
-      fetch(`http://localhost:4002/api/v2/endPoints/search/all/songs/playlist/${id}`)
-      .then((r)=>r.json())
-      .then(setPlaylistSongs)
-  }, []) 
-  console.log(playlistSongs)
+  useEffect(() => {
+    fetch(
+      `http://localhost:4002/api/v2/endPoints/search/all/songs/playlist/${id}`
+    )
+      .then((r) => r.json())
+      .then(setPlaylistSongs);
+  }, []);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   //=========================== mapping out each fecthed song to the PlaylistSong component =============
 
-  const renderedPlaylistSongs = playlistSongs.map((song)=>{
+  const renderedPlaylistSongs = playlistSongs.map((song) => {
     return (
-      <PlaylistSong 
+      <PlaylistSong
         key={song._id}
         id={song._id}
         name={song.name}
@@ -59,19 +69,18 @@ export default function Playlist({ key,id , image, likes, name, songs, getSrc, h
         imageURL={song.image}
         getSrc={getSrc}
         handleDeleteSong={handleDeleteSong}
-      />    
-    )
-  })
+      />
+    );
+  });
   return (
     <Card
       sx={{
         maxWidth: "70%",
-        backgroundColor:"#E2E2E2",
-        margin: 'auto',
-        padding: 2
+        backgroundColor: "#E2E2E2",
+        margin: "auto",
+        padding: 2,
       }}
     >
-      <Link to="/">HomeFeed</Link>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -102,10 +111,9 @@ export default function Playlist({ key,id , image, likes, name, songs, getSrc, h
         </ExpandMore>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          {renderedPlaylistSongs}
-        </CardContent>
+        <CardContent>{renderedPlaylistSongs}</CardContent>
       </Collapse>
+      <hr/>
     </Card>
   );
 }

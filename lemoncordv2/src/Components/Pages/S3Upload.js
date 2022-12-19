@@ -9,11 +9,13 @@ window.Buffer = window.Buffer || require("buffer").Buffer;
 //====================== s3 upload ======================================
 const S3_BUCKET = "lemoncord";
 const REGION = "us-east-1";
-// const ACCESS_KEY = ACCESS KEYS WITHHELD FOR SECURITY PURPOSES. 
+const ACCESS_KEY = "blah"
+//ACCESS KEYS WITHHELD FOR SECURITY PURPOSES. 
 // RE-INSERT THE KEYS WHEN IT IS TIME FOR APPLICATION TESTING AND DEVELOPMENT
-// const SECRET_ACCESS_KEY 
+const SECRET_ACCESS_KEY = "blahblah"
 const DIRECTORY = "songs";
 const callId = localStorage.id
+console.log(callId)
 
 const config = {
   bucketName: S3_BUCKET,
@@ -23,55 +25,56 @@ const config = {
   secretAccessKey: SECRET_ACCESS_KEY,
 };
 
-const S3Upload = () => {
+export default function S3Upload ({setDisplayedSongs, displayedSongs}){
   const navigate = useNavigate()
   //========================= s3 file state ====================================
   const [selectedFile, setSelectedFile] = useState(null);
   //========================= mongoDB upload states ===========================
   const [name, setName] = useState("");
-  const [bucket, setBucket] = useState("");
-  const [key, setKey] = useState("");
-  const [location, setLocation] = useState("");
+  const [uploadBucket, setUploadBucket] = useState("");
+  const [uploadKey, setUploadKey] = useState("");
+  const [uploadLocation, setUploadLocation] = useState("");
   const [image, setImage] = useState("")
 
   //============================ s3 upload handlers ===================================
   const handleFileInput = (e) => {
-    console.log(e.target.files);
     console.log(e.target.files[0]);
     setSelectedFile(e.target.files[0]);
   };
   const handleUpload = async (file) => {
     uploadFile(file, config)
-    .then((data) => {
-      console.log(data);
-      setBucket(data.bucket);
-      console.log(bucket);
-      setKey(data.key);
-      console.log(key);
-      setLocation(data.location);
-      console.log(location);
+    .then((data)=>{
+      console.log(data)
+      console.log(data.bucket)
+      console.log(data.key)
+      console.log(data.location)
+      const newObj = {
+          name: name,
+          bucket: data.bucket,
+          key: data.key,
+          location: data.location,
+          likes: [],
+          userId: callId,
+          image: image,
+          comments: []
+      }
+      console.log(newObj)
+      fetch(`http://localhost:4002/api/v2/endPoints/new/audio/${callId}`, {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify(newObj)
+      })
+      .then((r)=>r.json())
+      .then((json)=>{
+        console.log(json)
+        setDisplayedSongs([...displayedSongs, json])
+      })
+
     })
     .catch((err) => console.error(err));
-    const newObj = {
-        name: name,
-        bucket: bucket,
-        key: key,
-        location: location,
-        likes: [],
-        userId: callId,
-        image: image,
-        comments: []
-    }
-    console.log(newObj)
     
-    fetch(`http://localhost:4002/api/v2/endPoints/new/audio/${callId}`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(newObj)
-    })
-    .then((data)=>console.log(data))
     navigate("/")
 
   };
@@ -109,5 +112,3 @@ const S3Upload = () => {
     </div>
   );
 };
-
-export default S3Upload;

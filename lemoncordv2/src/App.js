@@ -26,10 +26,11 @@ import ListItemText from '@mui/material/ListItemText';
 //============ importing component routes ===============================
 import lemonChord from './Components/styling/1036.png'
 import PlaylistList from "./Components/PlaylistList";
+import ProfilePlaylists from './Components/ProfilePlaylists'
 import HomeFeed from "./Components/Pages/HomeFeed";
 import NewUser from "./Components/Pages/NewUser";
 import SignIn from './Components/SignIn'
-// import S3Upload from "./Components/Pages/S3Upload";
+import S3Upload from "./Components/Pages/S3Upload";
 import Profile from "./Components/Pages/Profile";
 
 function App() {
@@ -164,9 +165,9 @@ function App() {
                 <li>
                   <Link to="/">Home Feed</Link>
                 </li>
-                {/* <li>
+                <li>
                   <Link to="/new-song">Upload a song</Link>
-                </li> */}
+                </li>
                 <li>
                   <Link to="/new-user">Create an account!</Link>
                 </li>
@@ -209,10 +210,15 @@ function App() {
         {/* ====================== setting up routes =========================== */}
       </AppBar>
       <Routes>
-        <Route path="/" element={<HomeFeed setDisplayedSongs={setDisplayedSongs} displayedSongs={displayedSongs}/>}/>
+        <Route path="/" element={<HomeFeed 
+          setDisplayedSongs={setDisplayedSongs} 
+          displayedSongs={displayedSongs}
+          playlists={playlists}
+          />}/>
         <Route path="/new-user" element={<NewUser />}/>
-        {/* <Route path="new-song" element={<S3Upload />}/> */}
+        <Route path="new-song" element={<S3Upload setDisplayedSongs={setDisplayedSongs} displayedSongs={displayedSongs}/>}/>
         <Route path="/playlistsList" element={<PlaylistList playlists={playlists}/>}/>
+        <Route path="/profilePlaylists" element={<ProfilePlaylists/>}/>
         <Route path="/signin" element={<SignIn/>}/>
         <Route path="/Profile" element={<Profile />}/>
       </Routes>

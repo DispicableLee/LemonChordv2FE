@@ -9,7 +9,7 @@ import Streamer from '../Streamer'
 import PlaylistList from '../PlaylistList'
 import { Box } from "@mui/system";
 
-export default function HomeFeed({setDisplayedSongs,displayedSongs}){
+export default function HomeFeed({setDisplayedSongs,displayedSongs, playlists}){
 //=================== setting displayed songs ====================================
     const [src, setSrc] = useState("")
 //===================== fetching songs to display ===========================
@@ -20,7 +20,7 @@ export default function HomeFeed({setDisplayedSongs,displayedSongs}){
     }
 //========================== handleDeleteSong ==========================================
 function handleDeleteSong(id){
-  const sUpdated = displayedSongs.filter((song)=>song.id!=id)
+  const sUpdated = displayedSongs.filter((song)=>song._id=!id)
   setDisplayedSongs(sUpdated)
 }
     return (
@@ -47,7 +47,12 @@ function handleDeleteSong(id){
             All songs from all our delicious Users!
           </Typography>
         </CardContent>
-        <SongList displayedSongs={displayedSongs} getSrc={getSrc} handleDeleteSong={handleDeleteSong}/>
+        <SongList 
+          displayedSongs={displayedSongs} 
+          getSrc={getSrc} 
+          handleDeleteSong={handleDeleteSong}
+          playlists={playlists}
+          />
         <aside>
           <h1>hi</h1>
         </aside>

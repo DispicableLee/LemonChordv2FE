@@ -5,7 +5,7 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
-import { Button, CardMedia } from "@mui/material";
+import { Button, cardActionAreaClasses, CardMedia } from "@mui/material";
 import { useState, useEffect } from "react";
 import SongList from "../SongList";
 import Streamer from "../Streamer";
@@ -18,8 +18,9 @@ export default function Profile() {
   const [fullName, setFullName] = useState("");
   const [image, setImage] = useState("");
   const [postedSongs, setPostedSongs] = useState([]);
-  const [postedPlaylists, setPostedPlaylists] = useState([]);
-  const [src, setSrc] = useState("")
+  const [playlists, setPlaylists] = useState([])
+  const [userPlaylists, setUserPlaylists] = useState([]);
+  const [src, setSrc] = useState("");
 
   //================================= useEffect ====================================================
   useEffect(() => {
@@ -27,7 +28,6 @@ export default function Profile() {
     fetch(`http://localhost:4002/api/v2/endPoints/search/users/${callId}`)
       .then((r) => r.json())
       .then((json) => {
-        console.log(json);
         setUsername(json.userName);
         setFullName(json.fullName);
         setPassword(json.password);
@@ -41,23 +41,27 @@ export default function Profile() {
       .then((r) => r.json())
       .then((json) => {
         setPostedSongs(json);
-        console.log(postedSongs);
       });
+    //===================== fetching all playlists ====================================
+      fetch(`http://localhost:4002/api/v2/endPoints/search/all/playlists`)
+      .then(setPlaylists)
+    //======================== fetching user Playlists ===============================
+    fetch(
+      `http://localhost:4002/api/v2/endPoints/search/all/playlists/${callId}`
+    )
+      .then((r) => r.json())
+      .then(setUserPlaylists);
   }, []);
 
-      function getSrc(location){
-      console.log(location)
-      setSrc(location)
-    }
-//========================== handleDeleteSong ==========================================
-function handleDeleteSong(id){
-  const sUpdated = postedSongs.filter((song)=>song.id!=id)
-  setPostedSongs(sUpdated)
-}
-
-
-
-
+  function getSrc(location) {
+    console.log(location);
+    setSrc(location);
+  }
+  //========================== handleDeleteSong ==========================================
+  function handleDeleteSong(id) {
+    const sUpdated = postedSongs.filter((song) => song.id != id);
+    setPostedSongs(sUpdated);
+  }
 
   const navigate = useNavigate();
 
@@ -79,20 +83,19 @@ function handleDeleteSong(id){
           title={username}
           subheader={fullName}
         />
-          <CardMedia
-            component="img"
-            image={image}
-            alt="Paella dish"
-            height="500"
-          />
-
+        <CardMedia
+          component="img"
+          image={image}
+          alt="Paella dish"
+          height="500"
+        />
       </Card>
-
-      <aside>
-        <h1>hi</h1>
-      </aside>
-      <SongList displayedSongs={postedSongs} getSrc={getSrc} handleDeleteSong={handleDeleteSong}/>
-            <Streamer src={src}/>
+      <SongList
+        displayedSongs={postedSongs}
+        getSrc={getSrc}
+        handleDeleteSong={handleDeleteSong}
+      />
+      <Streamer src={src} />
       <aside
         style={{
           float: "right",

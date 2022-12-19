@@ -6,11 +6,18 @@ import Divider from "@mui/material/Divider";
 import { Box } from "@mui/system";
 import IconButton from "@mui/material/IconButton";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
 
-export default function PlaylistSong({key, id, name, location, likes, getSrc}) {
-const callId = localStorage.id
+export default function PlaylistSong({
+  key,
+  id,
+  name,
+  location,
+  likes,
+  getSrc,
+}) {
+  const callId = localStorage.id;
   //=================== hover state setting =========================
   // KEEP
   const [isHover, setIsHover] = useState(false);
@@ -26,56 +33,55 @@ const callId = localStorage.id
   const cardStyle = {
     backgroundColor: "",
     color: "#253237",
-    display: 'flex',
-    justifyContent: 'space-between',
+    display: "flex",
+    justifyContent: "space-between",
     fontSize: "30px",
     borderRadius: "0px 0px 0px 30px",
     width: 700,
     borderBottom: isHover ? " 2px solid #253237 " : "1px solid #253237",
-    overflow: 'auto'
+    overflow: "auto",
   };
-//==================== playsong ================================
-function playSong(x){
-    console.log(x)
-    getSrc(x)
-}
+  //==================== playsong ================================
+  function playSong(x) {
+    console.log(x);
+    getSrc(x);
+  }
   return (
     <div>
-        <br/>
+      <br />
       <Card
-      elevation="0"
-      sx={{ 
+        elevation="0"
+        sx={{
           width: "100%",
           height: 50,
-          padding: 3
-          
+          padding: 3,
         }}
         style={cardStyle}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        >
-                    <IconButton 
+      >
+        <IconButton
           style={{
-            float: 'left'
+            float: "left",
           }}
-          aria-label="play/pause" 
-          onClick={() => playSong(location)}>
+          aria-label="play/pause"
+          onClick={() => playSong(location)}
+        >
           <PlayArrowIcon sx={{ height: 38, width: 38 }} />
         </IconButton>
-          <Typography gutterBottom>
-            {name}
-            <br />
-            {likes.length} Likes
-          </Typography>
+        <Typography gutterBottom>
+          {name}
+          <br />
+          {likes.length} Likes
+        </Typography>
         <Divider />
-        <CardContent>
-        </CardContent>
-        <Box sx={{width: 300}}/>
-        <IconButton >
-          <DeleteIcon/>
+        <CardContent></CardContent>
+        <Box sx={{ width: 300 }} />
+        <IconButton>
+          <DeleteIcon />
         </IconButton>
         <Divider />
       </Card>
-      </div>
+    </div>
   );
 }
