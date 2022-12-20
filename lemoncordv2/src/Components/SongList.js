@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Song from './Song'
 
-export default function SongList({displayedSongs, getSrc, handleDeleteSong, playlists}){
+export default function SongList({displayedSongs, getSrc, handleDeleteSong, setPlaylists ,playlists}){
 
     const renderedSongs = displayedSongs.map((s)=>{
         return (
@@ -14,6 +14,7 @@ export default function SongList({displayedSongs, getSrc, handleDeleteSong, play
              likes={s.likes}
              getSrc={getSrc}
              handleDeleteSong={handleDeleteSong}
+             setPlaylists={setPlaylists}
              playlists={playlists}
             />
         )
@@ -22,9 +23,9 @@ export default function SongList({displayedSongs, getSrc, handleDeleteSong, play
         <div style={{
             padding: 10,
             maxHeight: 500,
+            clear: 'both',
             float: 'left',
             overflow: 'auto',
-            margin: 'auto'
         }}>
         {renderedSongs}
         </div>

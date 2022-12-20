@@ -28,7 +28,7 @@ export default function PlaylistList({ playlists }) {
     <div
       style={{
         overflow: "auto",
-        margin: "auto",
+        // margin: "auto",
       }}
     >
       <Link to="/">HomeFeed</Link>

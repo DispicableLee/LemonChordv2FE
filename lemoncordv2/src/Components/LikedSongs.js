@@ -12,7 +12,7 @@ import { useState } from "react";
 import { Button } from "@mui/material";
 import PlaylistAddTo from './PlaylistAddTo'
 
-export default function Song({key, id, songName, location, likes, getSrc, handleDeleteSong, setPlaylists, playlists}) {
+export default function LikedSongs({key, id, songName, location, likes, getSrc, handleDeleteSong, playlists}) {
 const callId = localStorage.id
 const [likeCount, setLikeCount] = useState(likes.length)
   //=================== hover state setting =========================
@@ -26,27 +26,19 @@ const [likeCount, setLikeCount] = useState(likes.length)
   };
   //======================== card styling ==================================
   const cardStyle = {
-    backgroundColor: "rgb(27, 162, 177)",
-    color: "rgb(226, 226, 226)",
+    backgroundColor: "#E2E2E2",
+    color: "#253237",
     display: 'flex',
     justifyContent: 'space-between',
     fontSize: "30px",
-    width: 800,
+    width: 450,
     height: 100,
-    border: isHover ? " 2px solid rgb(76, 146, 148) " : "rgb(0, 191, 255)",
+    borderRadius: "0px 0px 0px 30px",
+    borderBottom: isHover ? " 2px solid #253237 " : "1px solid #253237",
   };
 //=========================== playSong function =============================
 function playSong(x){
   getSrc(x)
-}
-//========================== delete song function ===========================
-function handleDelete(){
-  console.log(id)
-  fetch(`http://localhost:4002/api/v2/endPoints/delete/${id}/${callId}`, {
-    method: "DELETE",
-  })
-  .then((r)=>r.json())
-  .then(()=>{handleDeleteSong(id)})
 }
 //====================== like song function =============================
 function likeUnlike(){
@@ -89,10 +81,8 @@ function likeUnlike(){
 
         </CardContent>
         <Box sx={{width: 300}}/>
-        <PlaylistAddTo setPlaylists={setPlaylists} playlists={playlists} id={id}/>
-        <IconButton onClick={handleDelete}>
-          <DeleteIcon/>
-        </IconButton>
+        <PlaylistAddTo playlists={playlists} id={id}/>
+
       </Card>
       <Divider />
     </div>

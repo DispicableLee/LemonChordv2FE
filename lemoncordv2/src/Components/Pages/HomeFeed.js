@@ -9,7 +9,7 @@ import Streamer from '../Streamer'
 import PlaylistList from '../PlaylistList'
 import { Box } from "@mui/system";
 
-export default function HomeFeed({setDisplayedSongs,displayedSongs, playlists}){
+export default function HomeFeed({setDisplayedSongs,displayedSongs, setPlaylists, playlists}){
 //=================== setting displayed songs ====================================
     const [src, setSrc] = useState("")
 //===================== fetching songs to display ===========================
@@ -51,11 +51,9 @@ function handleDeleteSong(id){
           displayedSongs={displayedSongs} 
           getSrc={getSrc} 
           handleDeleteSong={handleDeleteSong}
+          setPlaylists={setPlaylists}
           playlists={playlists}
           />
-        <aside>
-          <h1>hi</h1>
-        </aside>
             <Streamer src={src}/>
       </Card>
         </div>

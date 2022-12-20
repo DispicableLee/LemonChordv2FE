@@ -5,10 +5,16 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
-import { Button, cardActionAreaClasses, CardMedia } from "@mui/material";
+import {
+  Button,
+  cardActionAreaClasses,
+  CardMedia,
+  Typography,
+} from "@mui/material";
 import { useState, useEffect } from "react";
 import SongList from "../SongList";
 import Streamer from "../Streamer";
+import LikedSongsList from "../LikedSongsList";
 
 export default function Profile() {
   const callId = localStorage.id;
@@ -18,8 +24,9 @@ export default function Profile() {
   const [fullName, setFullName] = useState("");
   const [image, setImage] = useState("");
   const [postedSongs, setPostedSongs] = useState([]);
-  const [playlists, setPlaylists] = useState([])
+  const [playlists, setPlaylists] = useState([]);
   const [userPlaylists, setUserPlaylists] = useState([]);
+  const [likedSongs, setLikedSongs] = useState([]);
   const [src, setSrc] = useState("");
 
   //================================= useEffect ====================================================
@@ -43,14 +50,19 @@ export default function Profile() {
         setPostedSongs(json);
       });
     //===================== fetching all playlists ====================================
-      fetch(`http://localhost:4002/api/v2/endPoints/search/all/playlists`)
-      .then(setPlaylists)
+    fetch(`http://localhost:4002/api/v2/endPoints/search/all/playlists`)
+      .then((r) => r.json())
+      .then(setPlaylists);
     //======================== fetching user Playlists ===============================
     fetch(
       `http://localhost:4002/api/v2/endPoints/search/all/playlists/${callId}`
     )
       .then((r) => r.json())
       .then(setUserPlaylists);
+    //================= fetching all songs a user has liked ==========================
+    fetch(`http://localhost:4002/api/v2/endPoints/search/all/liked/${callId}`)
+      .then((r) => r.json())
+      .then(setLikedSongs);
   }, []);
 
   function getSrc(location) {
@@ -74,8 +86,9 @@ export default function Profile() {
       <Card
         style={{
           maxWidth: "75%",
-          height: "500px",
+          height: "85%",
           margin: "auto",
+          padding: 10,
         }}
       >
         <CardHeader
@@ -89,12 +102,29 @@ export default function Profile() {
           alt="Paella dish"
           height="500"
         />
+        <hr />
+        <Typography>All your Songs!</Typography>
+        <SongList
+          style={{
+            float: 'left'
+          }}
+          displayedSongs={postedSongs}
+          getSrc={getSrc}
+          handleDeleteSong={handleDeleteSong}
+          playlists={playlists}
+        />
+        <aside style={{
+          float: 'right'
+        }}>
+          <Typography>Your liked songs!</Typography>
+          <LikedSongsList
+            likedSongs={likedSongs}
+            getSrc={getSrc}
+            handleDeleteSong={handleDeleteSong}
+            playlists={playlists}
+          />
+        </aside>
       </Card>
-      <SongList
-        displayedSongs={postedSongs}
-        getSrc={getSrc}
-        handleDeleteSong={handleDeleteSong}
-      />
       <Streamer src={src} />
       <aside
         style={{

@@ -12,31 +12,33 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Button } from "@mui/material";
-import { Routes, Route, Link, useNavigate} from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 //===================== drawer dependancies =============================
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import { styled, useTheme } from "@mui/material/styles";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 //============ importing component routes ===============================
-import lemonChord from './Components/styling/1036.png'
+import lemonChord from "./Components/styling/1036.png";
 import PlaylistList from "./Components/PlaylistList";
-import ProfilePlaylists from './Components/ProfilePlaylists'
+import ProfilePlaylists from "./Components/ProfilePlaylists";
 import HomeFeed from "./Components/Pages/HomeFeed";
 import NewUser from "./Components/Pages/NewUser";
-import SignIn from './Components/SignIn'
+import SignIn from "./Components/SignIn";
 import S3Upload from "./Components/Pages/S3Upload";
 import Profile from "./Components/Pages/Profile";
 
 function App() {
-  const navigate = useNavigate()
-  const [displayedSongs, setDisplayedSongs] = useState([])
-  const [playlists, setPlaylists] = useState([])
+  const navigate = useNavigate();
+  const [displayedSongs, setDisplayedSongs] = useState([]);
+  const [playlists, setPlaylists] = useState([]);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   //================= open/close nav menu =============================
@@ -52,28 +54,49 @@ function App() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-//=================================== api calls for songs and playlists ====================================
-    useEffect(()=>{
-        fetch("http://localhost:4002/api/v2/endPoints/search/all/songs")
-        .then((res)=> res.json())
-        .then((json) => {
-          setDisplayedSongs(json)}
-          )
-        
-        fetch("http://localhost:4002/api/v2/endPoints/search/all/playlists")
-        .then((r)=>r.json())
-        .then((json)=>{
-            setPlaylists(json)
-        })
+  //=================================== api calls for songs and playlists ====================================
+  useEffect(() => {
+    fetch("http://localhost:4002/api/v2/endPoints/search/all/songs")
+      .then((res) => res.json())
+      .then((json) => {
+        setDisplayedSongs(json);
+      });
 
-    },[])
+    fetch("http://localhost:4002/api/v2/endPoints/search/all/playlists")
+      .then((r) => r.json())
+      .then((json) => {
+        setPlaylists(json);
+      });
+  }, []);
+  //========================= drawer theme =============================
+  const drawerWidth = 240;
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  const DrawerHeader = styled("div")(({ theme }) => ({
+    display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: "flex-end",
+  }));
 
   return (
     <div>
-      <AppBar position="static" 
+      <AppBar
+        position="static"
         style={{
-          backgroundColor: 'rgb(27, 162, 177)',
-          color: "rgb(226, 226, 226)"
+          backgroundColor: "rgb(27, 162, 177)",
+          color: "rgb(226, 226, 226)",
         }}
       >
         <Container maxWidth="xl">
@@ -81,10 +104,10 @@ function App() {
             <img
               style={{
                 maxHeight: 40,
-                cursor: 'pointer'
+                cursor: "pointer",
               }}
               src={lemonChord}
-              
+              onClick={!open ? handleDrawerOpen : handleDrawerClose}
             />
             <Typography
               variant="h6"
@@ -103,7 +126,7 @@ function App() {
             >
               LemonChord
             </Typography>
-              
+
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
@@ -112,7 +135,7 @@ function App() {
                 aria-haspopup="true"
                 onClick={handleOpenNavMenu}
                 color="inherit"
-                >
+              >
                 <MenuIcon />
               </IconButton>
               <Menu
@@ -153,33 +176,20 @@ function App() {
             >
               LOGO
             </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex",  }  }}>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {/* ================= setting up ul with links ==================== */}
-              <ul
-                sx={{display: "inline"}}
-                style={{
-                  display: "inline",
-                  listStyleType: "none"
-                }}
-                >
-                <li>
-                  <Link to="/">Home Feed</Link>
-                </li>
-                <li>
-                  <Link to="/new-song">Upload a song</Link>
-                </li>
-                <li>
-                  <Link to="/new-user">Create an account!</Link>
-                </li>
-              </ul>
+
             </Box>
-{/* ======================== nav menu options =========================================== */}
+            {/* ======================== nav menu options =========================================== */}
             <Box sx={{ flexGrow: 0 }}>
-                <SignIn/>
-              
+              <SignIn />
+
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="https://i.pinimg.com/236x/1c/53/c5/1c53c5b3f3c6e788bfd32f2b4d54ed59.jpg" />
+                  <Avatar
+                    alt="Remy Sharp"
+                    src="https://i.pinimg.com/236x/1c/53/c5/1c53c5b3f3c6e788bfd32f2b4d54ed59.jpg"
+                  />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -198,29 +208,101 @@ function App() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                  <Link to="/Profile">
+                <Link to="/Profile">
                   <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">Profile</Typography>
                   </MenuItem>
-                  </Link>
+                </Link>
               </Menu>
             </Box>
           </Toolbar>
         </Container>
+        {/* =============== drawer ================== */}
+        <Drawer
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            "& .MuiDrawer-paper": {
+              width: drawerWidth,
+              boxSizing: "border-box",
+            },
+          }}
+          variant="persistent"
+          anchor="left"
+          open={open}
+        >
+          <DrawerHeader>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === "ltr" ? (
+                <ChevronLeftIcon />
+              ) : (
+                <ChevronRightIcon />
+              )}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <List>
+            {/* ========= drawer links ===================== */}
+              <ListItem>
+                <ListItemButton>
+                    <Link to="/">Home Feed</Link>
+                  <ListItemText />
+                </ListItemButton>
+              </ListItem>
+              <ListItem >
+                <ListItemButton>
+                    <Link to="/new-song">Upload a song</Link>
+                  <ListItemText/>
+                </ListItemButton>
+              </ListItem>
+              <ListItem>
+                <ListItemButton>
+                  <Link to="/new-user">Create an account!</Link>
+                  <ListItemText/>
+                </ListItemButton>
+              </ListItem>
+              <ListItem>
+                <ListItemButton>
+                  <Link to="/playlistsList">Playlists</Link>
+                  <ListItemText/>
+                </ListItemButton>
+              </ListItem>
+
+          </List>
+          <Divider />
+        </Drawer>
+
         {/* ====================== setting up routes =========================== */}
       </AppBar>
       <Routes>
-        <Route path="/" element={<HomeFeed 
-          setDisplayedSongs={setDisplayedSongs} 
-          displayedSongs={displayedSongs}
-          playlists={playlists}
-          />}/>
-        <Route path="/new-user" element={<NewUser />}/>
-        <Route path="new-song" element={<S3Upload setDisplayedSongs={setDisplayedSongs} displayedSongs={displayedSongs}/>}/>
-        <Route path="/playlistsList" element={<PlaylistList playlists={playlists}/>}/>
-        <Route path="/profilePlaylists" element={<ProfilePlaylists/>}/>
-        <Route path="/signin" element={<SignIn/>}/>
-        <Route path="/Profile" element={<Profile />}/>
+        <Route
+          path="/"
+          element={
+            <HomeFeed
+              setDisplayedSongs={setDisplayedSongs}
+              displayedSongs={displayedSongs}
+              setPlaylists={setPlaylists}
+              playlists={playlists}
+            />
+          }
+        />
+        <Route path="/new-user" element={<NewUser />} />
+        <Route
+          path="new-song"
+          element={
+            <S3Upload
+              setDisplayedSongs={setDisplayedSongs}
+              displayedSongs={displayedSongs}
+            />
+          }
+        />
+        <Route
+          path="/playlistsList"
+          element={<PlaylistList playlists={playlists} />}
+        />
+        <Route path="/profilePlaylists" element={<ProfilePlaylists />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/Profile" element={<Profile />} />
       </Routes>
     </div>
   );

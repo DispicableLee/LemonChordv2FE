@@ -79,6 +79,7 @@ export default function Playlist({
         backgroundColor: "#E2E2E2",
         margin: "auto",
         padding: 2,
+        overflow: 'auto'
       }}
     >
       <CardHeader
@@ -111,7 +112,10 @@ export default function Playlist({
         </ExpandMore>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>{renderedPlaylistSongs}</CardContent>
+        <CardContent style={{
+          overflow: 'auto',
+          maxHeight: '275px'
+        }}>{renderedPlaylistSongs}</CardContent>
       </Collapse>
       <hr/>
     </Card>
