@@ -54,7 +54,9 @@ function handleDeleteSong(id){
           setPlaylists={setPlaylists}
           playlists={playlists}
           />
+
             <Streamer src={src}/>
+
       </Card>
         </div>
     )

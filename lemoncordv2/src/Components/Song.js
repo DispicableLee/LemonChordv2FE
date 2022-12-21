@@ -31,7 +31,7 @@ const [likeCount, setLikeCount] = useState(likes.length)
     display: 'flex',
     justifyContent: 'space-between',
     fontSize: "30px",
-    width: 800,
+    width: 600,
     height: 100,
     border: isHover ? " 2px solid rgb(76, 146, 148) " : "rgb(0, 191, 255)",
   };

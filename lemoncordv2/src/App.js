@@ -36,6 +36,7 @@ import S3Upload from "./Components/Pages/S3Upload";
 import Profile from "./Components/Pages/Profile";
 
 function App() {
+  const profileUrl = localStorage.image;
   const navigate = useNavigate();
   const [displayedSongs, setDisplayedSongs] = useState([]);
   const [playlists, setPlaylists] = useState([]);
@@ -89,6 +90,11 @@ function App() {
     ...theme.mixins.toolbar,
     justifyContent: "flex-end",
   }));
+  //======================= reload page upon sign in ==================
+  function pageReload(){
+    console.log("reloading")
+    // window.location.reload(false)
+  }
 
   return (
     <div>
@@ -178,43 +184,42 @@ function App() {
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {/* ================= setting up ul with links ==================== */}
-
             </Box>
             {/* ======================== nav menu options =========================================== */}
-            <Box sx={{ flexGrow: 0 }}>
-              <SignIn />
 
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    alt="Remy Sharp"
-                    src="https://i.pinimg.com/236x/1c/53/c5/1c53c5b3f3c6e788bfd32f2b4d54ed59.jpg"
-                  />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                <Link to="/Profile">
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Profile</Typography>
-                  </MenuItem>
-                </Link>
-              </Menu>
-            </Box>
+            {localStorage.id ? 
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt="Remy Sharp" src={profileUrl} />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <Link to="/Profile">
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">Profile</Typography>
+                    </MenuItem>
+                  </Link>
+                </Menu>
+              </Box>
+             : 
+              <SignIn pageReload={pageReload}/>
+            }
           </Toolbar>
         </Container>
         {/* =============== drawer ================== */}
@@ -243,31 +248,30 @@ function App() {
           <Divider />
           <List>
             {/* ========= drawer links ===================== */}
-              <ListItem>
-                <ListItemButton>
-                    <Link to="/">Home Feed</Link>
-                  <ListItemText />
-                </ListItemButton>
-              </ListItem>
-              <ListItem >
-                <ListItemButton>
-                    <Link to="/new-song">Upload a song</Link>
-                  <ListItemText/>
-                </ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton>
-                  <Link to="/new-user">Create an account!</Link>
-                  <ListItemText/>
-                </ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton>
-                  <Link to="/playlistsList">Playlists</Link>
-                  <ListItemText/>
-                </ListItemButton>
-              </ListItem>
-
+            <ListItem>
+              <ListItemButton>
+                <Link to="/">Home Feed</Link>
+                <ListItemText />
+              </ListItemButton>
+            </ListItem>
+            <ListItem>
+              <ListItemButton>
+                <Link to="/new-song">Upload a song</Link>
+                <ListItemText />
+              </ListItemButton>
+            </ListItem>
+            <ListItem>
+              <ListItemButton>
+                <Link to="/new-user">Create an account!</Link>
+                <ListItemText />
+              </ListItemButton>
+            </ListItem>
+            <ListItem>
+              <ListItemButton>
+                <Link to="/playlistsList">Playlists</Link>
+                <ListItemText />
+              </ListItemButton>
+            </ListItem>
           </List>
           <Divider />
         </Drawer>

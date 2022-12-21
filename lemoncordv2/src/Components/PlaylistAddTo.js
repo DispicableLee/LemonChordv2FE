@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
@@ -14,13 +15,14 @@ import AddIcon from "@mui/icons-material/Add";
 import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import Typography from "@mui/material/Typography";
+import DialogContentText from "@mui/material/DialogContentText"; 
+import Typography from "@mui/material/Typography"; 
 import { blue } from "@mui/material/colors";
 const callId = localStorage.id;
 //========================= dialog window=================================
 function SimpleDialog(props) {
   const { onClose, selectedValue, open, setPlaylists, playlists, id } = props;
+  const navigate = useNavigate()
   //============= add to playlist API call =================
   function addToPlaylist(playlistId) {
     fetch(
@@ -57,7 +59,7 @@ function SimpleDialog(props) {
     console.log(playlistImage);
     console.log(id);
     const newObj = {
-      name: playlistImage,
+      name: playlistName,
       songs: [id],
       likes: [],
       userId: callId,
@@ -72,7 +74,7 @@ function SimpleDialog(props) {
     })
     .then((r)=>r.json())
     .then((json)=>setPlaylists([...playlists, json]))
-    handleDialogClose();
+    handleClose()
   }
 
   return (

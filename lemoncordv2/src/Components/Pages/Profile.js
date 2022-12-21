@@ -18,6 +18,9 @@ import LikedSongsList from "../LikedSongsList";
 
 export default function Profile() {
   const callId = localStorage.id;
+// =========== display songs/playlists =====================
+  const [switchView, setSwitchView] = useState(true)
+  const [displayedView, setDisplayedView] = useState("Playlists")
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -65,6 +68,10 @@ export default function Profile() {
       .then(setLikedSongs);
   }, []);
 
+  function handleDisplaySwitch(){
+    setDisplayedView("Songs")
+  }
+
   function getSrc(location) {
     console.log(location);
     setSrc(location);
@@ -74,6 +81,10 @@ export default function Profile() {
     const sUpdated = postedSongs.filter((song) => song.id != id);
     setPostedSongs(sUpdated);
   }
+function handleDeletePlaylist(id){
+  const pUpdated = playlists.filter((playlist)=>playlist._id=!id)
+  setPlaylists(pUpdated)
+}
 
   const navigate = useNavigate();
 
@@ -86,7 +97,7 @@ export default function Profile() {
       <Card
         style={{
           maxWidth: "75%",
-          height: "85%",
+          height: "65%",
           margin: "auto",
           padding: 10,
         }}
@@ -100,10 +111,14 @@ export default function Profile() {
           component="img"
           image={image}
           alt="Paella dish"
-          height="500"
+          maxHeight="400"
+          width="600"
         />
         <hr />
+        <Button onClick={handleDisplaySwitch}>{displayedView}</Button>
         <Typography>All your Songs!</Typography>
+
+
         <SongList
           style={{
             float: 'left'
@@ -124,6 +139,9 @@ export default function Profile() {
             playlists={playlists}
           />
         </aside>
+
+
+
       </Card>
       <Streamer src={src} />
       <aside

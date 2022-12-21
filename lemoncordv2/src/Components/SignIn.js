@@ -10,7 +10,7 @@ import UserData from "./UserData";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-export default function FormDialog() {
+export default function SignIn(pageReload) {
     const navigate = useNavigate()
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -38,7 +38,7 @@ export default function FormDialog() {
         UserData.setEmail(json.email)
         UserData.setImage(json.image)            
     })
-    // navigate("/Profile")
+    {pageReload()}
   }
 
   return (

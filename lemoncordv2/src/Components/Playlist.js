@@ -14,11 +14,13 @@ import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import DeleteIcon from '@mui/icons-material/Delete';
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { List, ListItem } from "@mui/material";
 import { Link } from "react-router-dom";
 import PlaylistSong from "./PlaylistSong";
 //====================================== handling playlist expanded list ==============================
+const callId = localStorage.id
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -42,6 +44,7 @@ export default function Playlist({
 }) {
   const [expanded, setExpanded] = useState(false);
   const [playlistSongs, setPlaylistSongs] = useState([]);
+  const [playlistLikes, setPlaylistLikes]= useState(likes)
   //================================ fetching each song in playlist =====================================
   useEffect(() => {
     fetch(
@@ -53,6 +56,16 @@ export default function Playlist({
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  // =========== like/unliking playlist =========================
+  function likeUnlikePlaylist(id){
+    fetch(`http://localhost:4002/api/v2/endPoints/like/playlist/${id}/${callId}`, {
+      method: "PUT"
+    })
+    .then((r)=>r.json())
+    .then((json)=>{
+      setPlaylistLikes(json.likes.length)
+    })
+  }
 
   //=========================== mapping out each fecthed song to the PlaylistSong component =============
 
@@ -83,24 +96,20 @@ export default function Playlist({
       }}
     >
       <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            User
-          </Avatar>
-        }
         action={
           <IconButton aria-label="settings">
-            <MoreVertIcon />
+            <DeleteIcon />
           </IconButton>
         }
         title={name}
-        subheader="posted by [user]"
+        subheader=""
       />
       <CardMedia component="img" height="300" image={image} alt="Paella dish" />
       <CardContent></CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+        {playlistLikes}
+        <IconButton aria-label="add to favorites" onClick={()=>likeUnlikePlaylist(id)}>
+          <FavoriteIcon/>
         </IconButton>
         <ExpandMore
           expand={expanded}

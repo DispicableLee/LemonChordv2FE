@@ -25,14 +25,15 @@ export default function PlaylistList({ playlists }) {
     );
   });
   return (
-    <div
-      style={{
-        overflow: "auto",
-        // margin: "auto",
-      }}
-    >
+    <div>
       <Link to="/">HomeFeed</Link>
-      {renderedPlaylists}
+      <div       
+        style={{
+          maxHeight: 1000,
+          overflow: "auto",
+        }}>
+        {renderedPlaylists}
+      </div>
       <Streamer src={src} />
     </div>
   );
