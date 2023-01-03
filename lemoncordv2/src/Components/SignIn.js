@@ -10,7 +10,7 @@ import UserData from "./UserData";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-export default function SignIn() {
+export default function SignIn({pageReload}) {
     const navigate = useNavigate()
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -35,10 +35,9 @@ export default function SignIn() {
       UserData.setPassword(json.password)        
       UserData.setName(json.fullName)        
       UserData.setEmail(json.email)
-      UserData.setImage(json.image)            
+      UserData.setImage(json.image)
+      window.location.reload()            
     })
-
-    handleClose()
   }
 
   return (
@@ -50,8 +49,7 @@ export default function SignIn() {
         <DialogTitle>Sign In</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occasionally.
+            To sign in, please enter your username and password
           </DialogContentText>
             <TextField
               autoFocus

@@ -1,14 +1,16 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { Box } from "@mui/system";
+import { Card } from "@mui/material";
 import Playlist from "./Playlist";
 import Streamer from "./Streamer";
 import { Link } from "react-router-dom";
 
 export default function PlaylistList({ playlists, handleDeletePlaylist }) {
   //================= getsrc===========================
+
   const [src, setSrc] = useState("");
   function getSrc(location) {
-    console.log(location);
     setSrc(location);
   }
   const renderedPlaylists = playlists.map((playlist) => {
@@ -26,16 +28,21 @@ export default function PlaylistList({ playlists, handleDeletePlaylist }) {
     );
   });
   return (
-    <div>
-      <Link to="/">HomeFeed</Link>
-      <div       
+    <Box>
+      <Box style={{
+        padding: 10
+      }}>
+        <Link to="/">HomeFeed</Link>
+      </Box>
+      <Card       
         style={{
           maxHeight: 1000,
           overflow: "auto",
+          margin: 'auto'
         }}>
         {renderedPlaylists}
-      </div>
+      </Card>
       <Streamer src={src} />
-    </div>
+    </Box>
   );
 }

@@ -98,10 +98,10 @@ function handleDeletePlaylist(id){
     justifyContent: "flex-end",
   }));
   //======================= reload page upon sign in ==================
-  // function pageReload(){
-  //   console.log("reloading")
-  //   window.location.reload(false)
-  // }
+  function pageReload(){
+    console.log("reloading")
+    window.location.reload()
+  }
 
   return (
     <div>
@@ -225,7 +225,7 @@ function handleDeletePlaylist(id){
                 </Menu>
               </Box>
              : 
-              <SignIn />
+              <SignIn pageReload={pageReload} />
             }
           </Toolbar>
         </Container>
@@ -312,7 +312,7 @@ function handleDeletePlaylist(id){
           element={<PlaylistList playlists={playlists} handleDeletePlaylist={handleDeletePlaylist}/>}
         />
         <Route path="/profilePlaylists" element={<ProfilePlaylists />} />
-        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signin" element={<SignIn pageReload={pageReload}/>} />
         <Route path="/Profile" element={<Profile />} />
       </Routes>
     </div>

@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import { ListItemButton } from "@mui/material";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -74,6 +75,7 @@ function SimpleDialog(props) {
     })
     .then((r)=>r.json())
     .then((json)=>setPlaylists([...playlists, json]))
+    window.location.reload(false)
     handleClose()
   }
 
@@ -110,7 +112,7 @@ function SimpleDialog(props) {
       <DialogTitle>Select playlist</DialogTitle>
       <List sx={{ pt: 0 }}>
         {playlists.map((playlist) => (
-          <ListItem autoFocus key={playlist._id}>
+          <ListItemButton autoFocus key={playlist._id}>
             <ListItemAvatar>
               <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
                 <PersonIcon />
@@ -120,7 +122,7 @@ function SimpleDialog(props) {
               primary={playlist.name}
               onClick={() => addToPlaylist(playlist._id)}
             />
-          </ListItem>
+          </ListItemButton>
         ))}
 
         <ListItem autoFocus button onClick={handleDialogClickOpen}>

@@ -43,7 +43,6 @@ export default function PlaylistSong({
   };
   //==================== playsong ================================
   function playSong(x) {
-    console.log(x);
     getSrc(x);
   }
   return (

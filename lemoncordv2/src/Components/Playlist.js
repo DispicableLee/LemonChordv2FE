@@ -98,7 +98,7 @@ export default function Playlist({
     <Card
       sx={{
         maxWidth: "70%",
-        backgroundColor: "#E2E2E2",
+        backgroundColor: "white",
         margin: "auto",
         marginBottom: 2,
         padding: 2,
