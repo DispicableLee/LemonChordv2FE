@@ -41,11 +41,10 @@ export default function Playlist({
   songs,
   getSrc,
   handleDeleteSong,
-  handleDeletePlaylist
 }) {
   const [expanded, setExpanded] = useState(false);
   const [playlistSongs, setPlaylistSongs] = useState([]);
-  const [playlistLikes, setPlaylistLikes]= useState(likes.length)
+  const [playlistLikes, setPlaylistLikes]= useState(likes)
   //================================ fetching each song in playlist =====================================
   useEffect(() => {
     fetch(
@@ -64,16 +63,8 @@ export default function Playlist({
     })
     .then((r)=>r.json())
     .then((json)=>{
-      console.log(json.likes.length)
       setPlaylistLikes(json.likes.length)
     })
-  }
-  function handleDelete(){
-    fetch(`http://localhost:4002/api/v2/endPoints/delete/playlist/${id}/${callId}`, {
-      method: "DELETE"
-    })
-    .then((r)=>r.json())
-    .then(handleDeletePlaylist(id))
   }
 
   //=========================== mapping out each fecthed song to the PlaylistSong component =============
@@ -100,14 +91,13 @@ export default function Playlist({
         maxWidth: "70%",
         backgroundColor: "#E2E2E2",
         margin: "auto",
-        marginBottom: 2,
         padding: 2,
         overflow: 'auto'
       }}
     >
       <CardHeader
         action={
-          <IconButton aria-label="settings" onClick={handleDelete}>
+          <IconButton aria-label="settings">
             <DeleteIcon />
           </IconButton>
         }
@@ -136,6 +126,7 @@ export default function Playlist({
           maxHeight: '275px'
         }}>{renderedPlaylistSongs}</CardContent>
       </Collapse>
+      <hr/>
     </Card>
   );
 }

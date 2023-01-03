@@ -4,7 +4,7 @@ import Playlist from "./Playlist";
 import Streamer from "./Streamer";
 import { Link } from "react-router-dom";
 
-export default function PlaylistList({ playlists }) {
+export default function PlaylistList({ playlists, handleDeletePlaylist }) {
   //================= getsrc===========================
   const [src, setSrc] = useState("");
   function getSrc(location) {
@@ -21,6 +21,7 @@ export default function PlaylistList({ playlists }) {
         name={playlist.name}
         songs={playlist.songs}
         getSrc={getSrc}
+        handleDeletePlaylist={handleDeletePlaylist}
       />
     );
   });

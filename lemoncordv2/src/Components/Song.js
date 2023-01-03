@@ -82,10 +82,9 @@ function likeUnlike(){
         </IconButton>
           <Typography color="white" gutterBottom>
             {songName}
-            <br />
+          </Typography>
             {likeCount} 
             <FavoriteIcon onClick={likeUnlike}/>
-          </Typography>
 
         </CardContent>
         <Box sx={{width: 300}}/>

@@ -69,6 +69,13 @@ function App() {
         setPlaylists(json);
       });
   }, []);
+
+  //========================== handle delete playlist ======================
+function handleDeletePlaylist(id){
+  console.log(id)
+  const updatedPlaylistList = playlists.filter((pList)=>pList._id=!id)
+  setPlaylists(updatedPlaylistList)
+}
   //========================= drawer theme =============================
   const drawerWidth = 240;
   const theme = useTheme();
@@ -91,10 +98,10 @@ function App() {
     justifyContent: "flex-end",
   }));
   //======================= reload page upon sign in ==================
-  function pageReload(){
-    console.log("reloading")
-    // window.location.reload(false)
-  }
+  // function pageReload(){
+  //   console.log("reloading")
+  //   window.location.reload(false)
+  // }
 
   return (
     <div>
@@ -218,7 +225,7 @@ function App() {
                 </Menu>
               </Box>
              : 
-              <SignIn pageReload={pageReload}/>
+              <SignIn />
             }
           </Toolbar>
         </Container>
@@ -302,7 +309,7 @@ function App() {
         />
         <Route
           path="/playlistsList"
-          element={<PlaylistList playlists={playlists} />}
+          element={<PlaylistList playlists={playlists} handleDeletePlaylist={handleDeletePlaylist}/>}
         />
         <Route path="/profilePlaylists" element={<ProfilePlaylists />} />
         <Route path="/signin" element={<SignIn />} />

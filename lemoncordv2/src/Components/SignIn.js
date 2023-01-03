@@ -10,7 +10,7 @@ import UserData from "./UserData";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-export default function SignIn(pageReload) {
+export default function SignIn() {
     const navigate = useNavigate()
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -24,21 +24,21 @@ export default function SignIn(pageReload) {
     setOpen(false);
   };
   function handleSignin(){
-    handleClose()
     console.log(username)
     console.log(password)
     fetch(`http://localhost:4002/api/v2/endPoints/search/user/${username}/${password}`)
     .then((r)=>r.json())
     .then((json)=>{     
-        console.log(json)
-        UserData.setId(json._id)        
-        UserData.setUsername(json.userName)        
-        UserData.setPassword(json.password)        
-        UserData.setName(json.fullName)        
-        UserData.setEmail(json.email)
-        UserData.setImage(json.image)            
+      console.log(json)
+      UserData.setId(json._id)        
+      UserData.setUsername(json.userName)        
+      UserData.setPassword(json.password)        
+      UserData.setName(json.fullName)        
+      UserData.setEmail(json.email)
+      UserData.setImage(json.image)            
     })
-    {pageReload()}
+
+    handleClose()
   }
 
   return (
