@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Song from './Song'
 
-export default function SongList({displayedSongs, getSrc, handleDeleteSong, setPlaylists ,playlists}){
+export default function SongList({displayedSongs, getSrc, handleDeleteSong, setPlaylists ,playlists, showComments}){
 
     const renderedSongs = displayedSongs.map((s)=>{
         return (
@@ -16,6 +16,8 @@ export default function SongList({displayedSongs, getSrc, handleDeleteSong, setP
              handleDeleteSong={handleDeleteSong}
              setPlaylists={setPlaylists}
              playlists={playlists}
+             comments={s.comments}
+             showComments={showComments}
             />
         )
     })

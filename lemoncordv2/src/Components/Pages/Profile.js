@@ -21,6 +21,7 @@ export default function Profile() {
   const callId = localStorage.id;
   // =========== display songs/playlists =====================
   const [switchView, setSwitchView] = useState(true);
+  const [switchDisplay, setSwitchDisplay] = useState("All your Songs")
   const [displayedView, setDisplayedView] = useState("Playlists");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -65,7 +66,10 @@ export default function Profile() {
       `http://localhost:4002/api/v2/endPoints/search/all/playlists/${callId}`
     )
       .then((r) => r.json())
-      .then(setUserPlaylists);
+      .then((json)=>{
+        
+        setUserPlaylists(json)
+      });
     //================================================================================
     //================== fetching playlists a user has liked =========================
     fetch(
@@ -82,7 +86,10 @@ export default function Profile() {
   function handleDisplaySwitch() {
     setSwitchView(!switchView);
     {
-      switchView ? setDisplayedView("Playlists") : setDisplayedView("Songs");
+      switchView ? setDisplayedView("Songs")  : setDisplayedView("Playlists");
+    }
+    {
+      displayedView =="Songs" ? setSwitchDisplay("All your Songs!") : setSwitchDisplay("All your Playlists!")
     }
   }
 
@@ -130,7 +137,7 @@ export default function Profile() {
         />
         <hr />
         <Button onClick={handleDisplaySwitch}>{displayedView}</Button>
-        <Typography>All your Songs!</Typography>
+        <Typography>{switchDisplay}</Typography>
 
         {switchView ? (
           <div>

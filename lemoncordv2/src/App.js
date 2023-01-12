@@ -73,7 +73,7 @@ function App() {
   //========================== handle delete playlist ======================
 function handleDeletePlaylist(id){
   console.log(id)
-  const updatedPlaylistList = playlists.filter((pList)=>pList._id=!id)
+  const updatedPlaylistList = playlists.filter((pList)=>!(pList._id==id))
   setPlaylists(updatedPlaylistList)
 }
   //========================= drawer theme =============================

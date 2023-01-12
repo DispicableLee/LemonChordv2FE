@@ -8,11 +8,12 @@ import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import DeleteIcon from '@mui/icons-material/Delete';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { useState } from "react";
 import { Button } from "@mui/material";
 import PlaylistAddTo from './PlaylistAddTo'
 
-export default function Song({key, id, songName, location, likes, getSrc, handleDeleteSong, setPlaylists, playlists}) {
+export default function Song({key, id, songName, location, likes, getSrc, handleDeleteSong, setPlaylists, playlists, showComments}) {
 const callId = localStorage.id
 const [likeCount, setLikeCount] = useState(likes.length)
   //=================== hover state setting =========================
@@ -29,10 +30,10 @@ const [likeCount, setLikeCount] = useState(likes.length)
     backgroundColor: "rgb(27, 162, 177)",
     color: "rgb(226, 226, 226)",
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     fontSize: "30px",
     width: 600,
-    height: 100,
+    maxHeight: 100,
     border: isHover ? " 2px solid rgb(76, 146, 148) " : "rgb(0, 191, 255)",
   };
 //=========================== playSong function =============================
@@ -46,7 +47,7 @@ function handleDelete(){
     method: "DELETE",
   })
   .then((r)=>r.json())
-  .then(()=>{handleDeleteSong(id)})
+  .then(handleDeleteSong(id))
 }
 //====================== like song function =============================
 function likeUnlike(){
@@ -60,6 +61,10 @@ function likeUnlike(){
     console.log(json.likes.length)
     setLikeCount(json.likes.length)
   })
+}
+//============== show comments fetch/function
+function handleComments(){
+  showComments(id)
 }
 
 
@@ -89,6 +94,9 @@ function likeUnlike(){
         </CardContent>
         <Box sx={{width: 300}}/>
         <PlaylistAddTo setPlaylists={setPlaylists} playlists={playlists} id={id}/>
+        <IconButton onClick={handleComments}>
+          <ChatBubbleOutlineIcon/>
+        </IconButton>
         <IconButton onClick={handleDelete}>
           <DeleteIcon/>
         </IconButton>

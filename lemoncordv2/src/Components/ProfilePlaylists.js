@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Playlist from "./Playlist";
 
 export default function ProfilePlaylists({ playlists, getSrc }) {
+  console.log(playlists)
   //================= getsrc===========================
   const renderedPlaylists = playlists.map((playlist) => {
     return (

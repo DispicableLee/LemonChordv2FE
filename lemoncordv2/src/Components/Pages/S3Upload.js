@@ -12,7 +12,7 @@ const REGION = "us-east-1";
 const ACCESS_KEY = "blah"
 //ACCESS KEYS WITHHELD FOR SECURITY PURPOSES. 
 // RE-INSERT THE KEYS WHEN IT IS TIME FOR APPLICATION TESTING AND DEVELOPMENT
-const SECRET_ACCESS_KEY = "blahblah"
+const SECRET_ACCESS_KEY = "blah"
 const DIRECTORY = "songs";
 const callId = localStorage.id
 console.log(callId)

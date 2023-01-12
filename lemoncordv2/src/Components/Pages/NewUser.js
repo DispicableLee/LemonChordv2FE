@@ -13,8 +13,24 @@ export default function BasicTextFields() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
-  const [image, setImage] = useState("");
+  const [imageFile, setImageFile] = useState(null);
 
+
+
+
+  const handleChange = function loadFile(e) {
+    if (e.target.files.length > 0) {
+      const file = URL.createObjectURL(e.target.files[0]);
+      let blob = fetch(file).then(r=>r.blob())
+      console.log(blob)
+      setImageFile(file);
+    }
+  };
+
+
+
+
+//================= New User Creation ============================
   function newUser(e) {
     e.preventDefault();
     const newObj = {
@@ -22,7 +38,7 @@ export default function BasicTextFields() {
       password: password,
       email: email,
       fullName: fullName,
-      image: image,
+      image: imageFile,
       postedSongs: [],
       postedPlaylists: [],
     };
@@ -42,7 +58,7 @@ export default function BasicTextFields() {
     UserData.setPassword(password);
     UserData.setName(fullName);
     UserData.setEmail(email);
-    UserData.setImage(image);
+    UserData.setImage(imageFile);
     UserData.setId(id);
     navigate("/Profile");
   }
@@ -84,12 +100,19 @@ export default function BasicTextFields() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <br />
-        <TextField
-          id="standard-basic"
-          label="Image"
-          variant="outlined"
-          onChange={(e) => setImage(e.target.value)}
+        <input
+          type="file"
+          onChange={handleChange}
+          id="upload"
+          accept="image/*"
         />
+        <label htmlFor="upload" type="file"/>
+          <div>
+            <img alt="uploadImage" src={imageFile} style={{
+              maxHeight: 200,
+              maxWidth: 200
+            }}/>
+          </div>
         <br />
         <Button variant="contained" label="sign up" onClick={newUser}>
           Sign Up!

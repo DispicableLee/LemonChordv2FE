@@ -7,11 +7,14 @@ import Typography from '@mui/material/Typography';
 import SongList from "../SongList";
 import Streamer from '../Streamer'
 import PlaylistList from '../PlaylistList'
+import CommentsList from "../CommentsList";
 import { Box } from "@mui/system";
 
 export default function HomeFeed({setDisplayedSongs,displayedSongs, setPlaylists, playlists}){
 //=================== setting displayed songs ====================================
     const [src, setSrc] = useState("")
+//================ setting displayed Comments ======================
+    const [commentsList, setCommentsList] = useState([])
 //===================== fetching songs to display ===========================
 
     function getSrc(location){
@@ -20,8 +23,21 @@ export default function HomeFeed({setDisplayedSongs,displayedSongs, setPlaylists
     }
 //========================== handleDeleteSong ==========================================
 function handleDeleteSong(id){
-  const sUpdated = displayedSongs.filter((song)=>song._id=!id)
+  console.log(displayedSongs)
+  const sUpdated = displayedSongs.filter((song)=>!(song._id==id))
+  console.log(sUpdated)
   setDisplayedSongs(sUpdated)
+}
+
+function showComments(id){
+  console.log(id)
+    fetch(`http://localhost:4002/api/v2/endPoints/search/all/song/${id}/comments`)
+    .then((r)=>r.json())
+    .then((json)=>{
+      console.log(json)
+      setCommentsList(json)
+      console.log(commentsList)
+    })
 }
     return (
       <div>
@@ -53,7 +69,11 @@ function handleDeleteSong(id){
           handleDeleteSong={handleDeleteSong}
           setPlaylists={setPlaylists}
           playlists={playlists}
+          showComments={showComments}
           />
+          {/* <aside>
+            {comments.length != 0 ? <CommentsList comments={comments}/>: null}
+          </aside> */}
 
             <Streamer src={src}/>
 
